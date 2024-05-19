@@ -17,7 +17,7 @@ class HomeScreen extends HookConsumerWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        title: const Text("Home Screen"),
+        title: const Text("Home"),
         bottom: PreferredSize(
             preferredSize: const Size(200, 60),
             child: Padding(
@@ -32,7 +32,7 @@ class HomeScreen extends HookConsumerWidget {
                 },
                 decoration: const InputDecoration(
                     isDense: true,
-                   contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 12),
+                    contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 12),
                     suffixIcon: Icon(Icons.search),
                     hintText: "Search Photos",
                     border: OutlineInputBorder()),
@@ -58,6 +58,7 @@ class HomeScreen extends HookConsumerWidget {
         } else if ((homephotos.isLoading == false) &&
             homephotos.photos != null) ...{
           GridView.builder(
+            padding: const EdgeInsets.all(10),
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             itemCount:
@@ -66,26 +67,54 @@ class HomeScreen extends HookConsumerWidget {
               childAspectRatio: 0.7,
               crossAxisCount: 2,
               crossAxisSpacing: 4,
-              mainAxisSpacing: 0,
+              mainAxisSpacing: 12,
             ),
             itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.only(left: 10, right: 10),
-                child: GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return Dialog(
-                            child: Image.network(
-                                homephotos.photos?[index].src.large ?? ""),
+              return Stack(
+                children: [
+                  GridTile(
+                    child: GestureDetector(
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return Dialog(
+                                child: Image.network(
+                                    homephotos.photos?[index].src.large ?? ""),
+                              );
+                            },
                           );
                         },
-                      );
-                    },
-                    child: CachedNetworkImage(
-                        imageUrl:
-                            homephotos.photos?[index].src.portrait ?? "")),
+                        child: Container(
+                          decoration: const BoxDecoration(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                          child: CachedNetworkImage(
+                              imageUrl:
+                                  homephotos.photos?[index].src.portrait ?? ""),
+                        )),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    left: 0,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                            iconSize: 30,
+                            color: Colors.red.shade300,
+                            onPressed: () {},
+                            icon: const Icon(Icons.favorite)),
+                        IconButton(
+                            iconSize: 30,
+                            color: Colors.amber,
+                            onPressed: () {},
+                            icon: const Icon(Icons.wallpaper)),
+                      ],
+                    ),
+                  )
+                ],
               );
             },
           )

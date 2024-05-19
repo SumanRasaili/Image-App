@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -56,29 +57,31 @@ class SearchPage extends HookConsumerWidget {
             shrinkWrap: true,
             itemCount: photoList.photos != null ? photoList.photos!.length : 0,
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              childAspectRatio: 0.7,
-              crossAxisCount: 2,
+              // childAspectRatio: 0.9,
+              crossAxisCount: 3,
               crossAxisSpacing: 4,
-              mainAxisSpacing: 0,
+              mainAxisSpacing: 20,
             ),
             itemBuilder: (context, index) {
               return Padding(
-                padding: const EdgeInsets.only(left: 10, right: 10),
-                child: GestureDetector(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return Dialog(
-                            child: Image.network(
-                                photoList.photos?[index].src.large ?? ""),
-                          );
-                        },
-                      );
-                    },
-                    child: Image.network(
-                        photoList.photos?[index].src.portrait ?? "")),
-              );
+                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  child: GestureDetector(
+                      onTap: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                              child: InteractiveViewer(
+                                child: Image.network(
+                                    photoList.photos?[index].src.large ?? ""),
+                              ),
+                            );
+                          },
+                        );
+                      },
+                      child: CachedNetworkImage(
+                          imageUrl:
+                              photoList.photos?[index].src.portrait ?? "")));
             },
           )
         ])));

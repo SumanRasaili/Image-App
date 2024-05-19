@@ -44,7 +44,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        title: const Text("Profile Screen"),
+        title: const Text("Profile"),
         actions: [
           IconButton(
               onPressed: () {
@@ -158,8 +158,19 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 userProfData?.email ?? "",
                 style: const TextStyle(fontSize: 20),
               ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Divider(),
+              ),
               const SizedBox(
-                height: 15,
+                height: 10,
+              ),
+              const Text(
+                "Select your date of birth to see magic",
+                style: TextStyle(fontSize: 18),
+              ),
+              const SizedBox(
+                height: 5,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 23),
