@@ -1,5 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -12,6 +13,12 @@ final userAuthProvider = Provider<AuthRepo>((ref) {
 class AuthRepo {
   final FirebaseAuth firebaseAuth;
   AuthRepo({required this.firebaseAuth});
+
+  Future<void> signOutUser() async {
+    await firebaseAuth.signOut();
+  }
+
+  Stream<User?> get userState => firebaseAuth.authStateChanges();
 
   Future<void> signInWithGoogle({required BuildContext context}) async {
     try {

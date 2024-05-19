@@ -16,16 +16,21 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      var userData = ref.read(userDataProvider);
-      if (userData != null) {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => const DashboardScreen(),
-        ));
-      } else {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const SignInScreen(),
-        ));
-      }
+      ref.read(userAuthProvider).userState.listen((event) {
+        if (event != null) {
+          if (mounted) {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => const DashboardScreen(),
+            ));
+          }
+        } else {
+          if (mounted) {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const SignInScreen(),
+            ));
+          }
+        }
+      });
     });
 
     super.initState();

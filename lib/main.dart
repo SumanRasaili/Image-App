@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vritapp/features/auth/provider/user_data_notifier.dart';
 import 'package:vritapp/firebase_options.dart';
 import 'package:vritapp/splash_screen.dart';
 
@@ -15,10 +16,11 @@ void main() async {
   runApp( ProviderScope(child: Phoenix(child: const MyApp())));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
+
   const MyApp({super.key});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
         title: 'Flutter Demo',
         builder: BotToastInit(),

@@ -10,6 +10,8 @@ class AuthController {
   AuthController({required this.ref});
   Ref ref;
   signInWithGoogle(BuildContext context) {
-    ref.read(userAuthProvider).signInWithGoogle(context: context);
+    ref.read(userAuthProvider).signInWithGoogle(
+          context: context,
+        );
   }
 }
