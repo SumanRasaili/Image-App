@@ -15,22 +15,20 @@ class AuthRepo {
 
   Future<void> signInWithGoogle({required BuildContext context}) async {
     try {
+      BotToast.showLoading();
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
       final GoogleSignInAuthentication? googleAuth =
           await googleUser?.authentication;
       final credentials =
           GoogleAuthProvider.credential(accessToken: googleAuth?.accessToken);
-      var resp =
-          await firebaseAuth.signInWithCredential(credentials).then((value) {
+      await firebaseAuth.signInWithCredential(credentials).then((value) {
         BotToast.closeAllLoading();
         Navigator.of(context).pushReplacement(MaterialPageRoute(
           builder: (context) => const DashboardScreen(),
         ));
         BotToast.showText(text: "Signed In Successfully");
       });
-      print("THe signin response is $resp");
     } on FirebaseAuthException catch (e) {
-      print("Error $e");
       BotToast.closeAllLoading();
       BotToast.showText(
           backgroundColor: Colors.red, text: e.message.toString());
@@ -38,7 +36,13 @@ class AuthRepo {
   }
 
   Future<User?> getCurrentUserData() async {
-    User? userData = firebaseAuth.currentUser;
+    User? userData;
+    try {
+      userData = firebaseAuth.currentUser;
+      return userData;
+    } on FirebaseAuthException catch (e) {
+      print("The user data error is ${e.toString()}");
+    }
     return userData;
   }
 }

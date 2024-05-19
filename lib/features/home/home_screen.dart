@@ -20,35 +20,7 @@ class HomeScreen extends HookConsumerWidget {
         automaticallyImplyLeading: false,
         centerTitle: true,
         title: const Text("Home Screen"),
-        actions: [
-          IconButton(
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (ctx) {
-                      return AlertDialog(
-                          content: const Text("Do you really want to LogOut?"),
-                          actions: [
-                            FilledButton(
-                              onPressed: () {
-                                Navigator.pop(ctx);
-                              },
-                              child: const Text("No"),
-                            ),
-                            FilledButton(
-                              onPressed: () async {
-                                await FirebaseAuth.instance
-                                    .signOut()
-                                    .then((value) => Phoenix.rebirth(ctx));
-                              },
-                              child: const Text("YES"),
-                            ),
-                          ],
-                          title: const Text("Log Out"));
-                    });
-              },
-              icon: const Icon(Icons.logout)),
-        ],
+        
         bottom: PreferredSize(
             preferredSize: const Size(200, 60),
             child: Padding(
