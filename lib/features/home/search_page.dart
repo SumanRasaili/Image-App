@@ -38,6 +38,8 @@ class SearchPage extends HookConsumerWidget {
                   },
                   controller: photoController,
                   decoration: const InputDecoration(
+                      isDense: true,
+                      contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 12),
                       suffixIcon: Icon(Icons.search),
                       hintText: "Search Photos",
                       border: OutlineInputBorder()),

@@ -1,10 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vritapp/features/auth/provider/user_data_notifier.dart';
 import 'package:vritapp/features/home/provider/home_provider.dart';
 import 'package:vritapp/features/home/search_page.dart';
 
@@ -14,7 +11,6 @@ class HomeScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final homephotos = ref.watch(homeNotifierProvider);
-    final userProv = ref.watch(userDataProvider);
     final photoController = useTextEditingController();
 
     return Scaffold(
@@ -35,6 +31,8 @@ class HomeScreen extends HookConsumerWidget {
                   ));
                 },
                 decoration: const InputDecoration(
+                    isDense: true,
+                   contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 12),
                     suffixIcon: Icon(Icons.search),
                     hintText: "Search Photos",
                     border: OutlineInputBorder()),
