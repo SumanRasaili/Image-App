@@ -1,0 +1,52 @@
+import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vritapp/features/auth/repository/auth_repo.dart';
+import 'package:vritapp/features/auth/sign_in_screen.dart';
+import 'package:vritapp/features/base_page/dashboard_screen.dart';
+
+class SplashScreen extends StatefulHookConsumerWidget {
+  const SplashScreen({super.key});
+
+  @override
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends ConsumerState<SplashScreen> {
+  @override
+  void initState() {
+    ref.read(userAuthProvider).getCurrentUserData().then((value) {
+      if (value != null) {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => const DashboardScreen(),
+        ));
+      } else {
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const SignInScreen(),
+        ));
+      }
+    });
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Vrit App",
+              style: TextStyle(fontSize: 25),
+            ),
+            SizedBox(
+              height: 150,
+            ),
+            CircularProgressIndicator()
+          ],
+        ),
+      ),
+    );
+  }
+}

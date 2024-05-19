@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "803116489851",
+    "project_id": "task-app-ba6ac",
+    "storage_bucket": "task-app-ba6ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:803116489851:android:778dfe9e632737943196de",
+        "android_client_info": {
+          "package_name": "com.example.vritapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "803116489851-mpe4nkve4o1b6cs46alh44s2rjaujj54.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vritapp",
+            "certificate_hash": "beb280351e852a39f94092a8466b43f644da38aa"
+          }
+        },
+        {
+          "client_id": "803116489851-mcgkl7k7lcn3umgg26l61qpn4b8notip.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8Rst3_Fb5K-RCqLQbJ6ZooaSC3N4T2yo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "803116489851-mcgkl7k7lcn3umgg26l61qpn4b8notip.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "803116489851-cf0ihdivpbo9p1e2i1b5tud05rvhaujk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.vritapp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
