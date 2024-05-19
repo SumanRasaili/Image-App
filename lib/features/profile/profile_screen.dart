@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:bot_toast/bot_toast.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -8,6 +9,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vritapp/core/notification_service/notification_services.dart';
 import 'package:vritapp/features/auth/provider/user_data_notifier.dart';
 import 'package:vritapp/features/auth/repository/auth_repo.dart';
 import 'package:vritapp/textformfield_widget.dart';
@@ -178,9 +180,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             if (pickedDate.year == year &&
                                 pickedDate.month == month &&
                                 pickedDate.day == today) {
-                              print("Happy Birthday");
+                              Notificationservice().showNotificationdetail();
                             } else {
-                              print("Sad Birthday");
+                              BotToast.showText(
+                                  text: "Mystery remain unsolved");
                             }
 
                             dateController.text =
@@ -189,7 +192,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           print("Picked date is $pickedDate");
                         },
                         controller: dateController,
-                        labeltext: "Pick date")),
+                        labeltext: "Date of Birth")),
               )
             ],
           ),
