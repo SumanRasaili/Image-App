@@ -1,7 +1,12 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vritapp/display_image.dart';
 import 'package:vritapp/features/home/provider/home_provider.dart';
 import 'package:vritapp/features/home/search_page.dart';
 
@@ -12,6 +17,22 @@ class HomeScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final homephotos = ref.watch(homeNotifierProvider);
     final photoController = useTextEditingController();
+    final result = useState<String>("");
+    Future<void> setwallPaper({required String image}) async {
+      var file = await DefaultCacheManager().getSingleFile(image);
+      try {
+        BotToast.showLoading();
+        bool res = (await (WallpaperManager.setWallpaperFromFile(
+            file.path, WallpaperManager.HOME_SCREEN)));
+        if (res) {
+          BotToast.closeAllLoading();
+          result.value = "Wallpaper set succesfully";
+        }
+      } on PlatformException {
+        BotToast.closeAllLoading();
+        result.value = "Failed to load image";
+      }
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -75,23 +96,33 @@ class HomeScreen extends HookConsumerWidget {
                   GridTile(
                     child: GestureDetector(
                         onTap: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) {
-                              return Dialog(
-                                child: Image.network(
-                                    homephotos.photos?[index].src.large ?? ""),
-                              );
-                            },
-                          );
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => DisplayImage(
+                              id: "${homephotos.photos?[index].id}",
+                              image: homephotos.photos?[index].src.large ?? "",
+                            ),
+                          ));
+                          // showDialog(
+                          //   context: context,
+                          //   builder: (context) {
+                          //     return Dialog(
+                          //       child: Image.network(
+                          //           homephotos.photos?[index].src.large ?? ""),
+                          //     );
+                          //   },
+                          // );
                         },
                         child: Container(
                           decoration: const BoxDecoration(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10))),
-                          child: CachedNetworkImage(
-                              imageUrl:
-                                  homephotos.photos?[index].src.portrait ?? ""),
+                          child: Hero(
+                            tag: "${homephotos.photos?[index].id}",
+                            child: CachedNetworkImage(
+                                imageUrl:
+                                    homephotos.photos?[index].src.portrait ??
+                                        ""),
+                          ),
                         )),
                   ),
                   Positioned(
@@ -109,7 +140,38 @@ class HomeScreen extends HookConsumerWidget {
                         IconButton(
                             iconSize: 30,
                             color: Colors.amber,
-                            onPressed: () {},
+                            onPressed: () async {
+                              showDialog(
+                                  context: context,
+                                  builder: (ctx) {
+                                    return AlertDialog(
+                                        content:
+                                            const Text("Do you want to set??"),
+                                        actions: [
+                                          FilledButton(
+                                            onPressed: () {
+                                              Navigator.pop(ctx);
+                                            },
+                                            child: const Text("No"),
+                                          ),
+                                          FilledButton(
+                                            onPressed: () async {
+                                              await setwallPaper(
+                                                      image: homephotos
+                                                              .photos?[index]
+                                                              .src
+                                                              .portrait ??
+                                                          "")
+                                                  .then((value) =>
+                                                      Navigator.of(ctx).pop());
+                                            },
+                                            child: const Text("YES"),
+                                          ),
+                                        ],
+                                        title: const Text(
+                                            "Set this image as wallpaper"));
+                                  });
+                            },
                             icon: const Icon(Icons.wallpaper)),
                       ],
                     ),

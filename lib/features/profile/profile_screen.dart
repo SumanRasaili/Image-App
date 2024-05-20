@@ -24,15 +24,24 @@ class ProfileScreen extends StatefulHookConsumerWidget {
 class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   final ImagePicker picker = ImagePicker();
   File? image;
+  late SharedPreferences prefs;
 
   setImage({required File image}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('userPickedImage', image.path);
   }
 
-  Future<String> getImage() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('userPickedImage')!;
+  getImage() async {
+    prefs = await SharedPreferences.getInstance();
+    setState(() {
+      image = File(prefs.getString('userPickedImage') ?? "");
+    });
+  }
+
+  @override
+  void initState() {
+    getImage();
+    super.initState();
   }
 
   @override
@@ -137,6 +146,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                   image = File(file.path);
                                   setImage(image: File(image?.path ?? ""));
                                 });
+                                // image = File(await getImage() ?? "");
                               }
                             },
                             iconSize: 20,
@@ -200,7 +210,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             dateController.text =
                                 DateFormat("yyyy-MM-dd").format(pickedDate);
                           }
-                          print("Picked date is $pickedDate");
                         },
                         controller: dateController,
                         labeltext: "Date of Birth")),
