@@ -6,6 +6,7 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vritapp/common/common_components.dart';
 import 'package:vritapp/features/home/provider/photos_provider.dart';
 import 'package:vritapp/features/home/search_page.dart';
 import 'package:vritapp/widgets/display_image.dart';
@@ -19,23 +20,6 @@ class HomeScreen extends HookConsumerWidget {
     final homeNotifier = ref.watch(homeNotifierProvider.notifier);
     final photoController = useTextEditingController();
     final result = useState<String>("");
-    Future<void> setwallPaper({required String image}) async {
-      var file = await DefaultCacheManager().getSingleFile(image);
-      try {
-        BotToast.showLoading();
-        bool res = (await (WallpaperManager.setWallpaperFromFile(
-            file.path, WallpaperManager.HOME_SCREEN)));
-        if (res) {
-          BotToast.closeAllLoading();
-          result.value = "Wallpaper set succesfully";
-          BotToast.showText(text: result.value);
-        }
-      } on PlatformException {
-        BotToast.closeAllLoading();
-        result.value = "Failed to load image";
-        BotToast.showText(text: result.value);
-      }
-    }
 
     return Scaffold(
       appBar: AppBar(
@@ -161,7 +145,10 @@ class HomeScreen extends HookConsumerWidget {
                                                 ),
                                                 FilledButton(
                                                   onPressed: () async {
-                                                    await setwallPaper(
+                                                    await ref
+                                                        .read(
+                                                            commonfuncProvider)
+                                                        .setwallPaper(
                                                             image: homephotos
                                                                     .photos?[
                                                                         index]
