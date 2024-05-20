@@ -12,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vritapp/core/notification_service/notification_services.dart';
 import 'package:vritapp/features/auth/provider/user_data_notifier.dart';
 import 'package:vritapp/features/auth/repository/auth_repo.dart';
-import 'package:vritapp/textformfield_widget.dart';
+import 'package:vritapp/widgets/textformfield_widget.dart';
 
 class ProfileScreen extends StatefulHookConsumerWidget {
   const ProfileScreen({super.key});

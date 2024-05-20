@@ -6,7 +6,7 @@ import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vritapp/display_image.dart';
+import 'package:vritapp/widgets/display_image.dart';
 import 'package:vritapp/features/home/provider/home_provider.dart';
 import 'package:vritapp/features/home/search_page.dart';
 
