@@ -27,18 +27,16 @@ class SearchPage extends HookConsumerWidget {
               child: TextFormField(
                 onTap: () {},
                 onChanged: (value) {
-                  if (value.isNotEmpty) {
-                    isSearching.value = true;
-                    if (timer.value != null) {
-                      timer.value?.cancel();
-                    }
-                    timer.value = Timer(const Duration(seconds: 1), () async {
-                      ref.read(searchNotifierProvider.notifier).searchPhotos(
-                            query: value,
-                          );
-                      isSearching.value = false;
-                    });
+                  isSearching.value = true;
+                  if (timer.value != null) {
+                    timer.value?.cancel();
                   }
+                  timer.value = Timer(const Duration(seconds: 1), () async {
+                    ref.read(searchNotifierProvider.notifier).searchPhotos(
+                          query: value,
+                        );
+                    isSearching.value = false;
+                  });
                 },
                 controller: photoController,
                 decoration: InputDecoration(
@@ -66,7 +64,8 @@ class SearchPage extends HookConsumerWidget {
                     child: Center(
                       child: CircularProgressIndicator(),
                     ))
-              } else if (!isSearching.value && photoList.photos == null) ...{
+              } else if (!isSearching.value &&
+                  (photoList.photos == null || photoList.photos!.isEmpty)) ...{
                 const SizedBox(
                   height: 200,
                   child: Center(child: Text("Nothing to Show")),
@@ -117,7 +116,11 @@ class SearchPage extends HookConsumerWidget {
               const SizedBox(
                 height: 10,
               ),
-              Text("is pagination ${photoList.isPaginationLoading}"),
+              if (photoList.isPaginationLoading) ...{
+                const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              },
               const SizedBox(
                 height: 10,
               ),
