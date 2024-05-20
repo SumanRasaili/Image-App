@@ -102,12 +102,6 @@ class SearchPage extends HookConsumerWidget {
                               );
                             },
                             child: CachedNetworkImage(
-                                placeholder: (context, url) {
-                                  return Container(
-                                    decoration: BoxDecoration(
-                                        color: Colors.grey.shade300),
-                                  );
-                                },
                                 imageUrl:
                                     photoList.photos?[index].src.portrait ??
                                         ""),

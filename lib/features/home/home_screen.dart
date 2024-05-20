@@ -1,10 +1,6 @@
-import 'package:bot_toast/bot_toast.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vritapp/common/common_components.dart';
 import 'package:vritapp/features/home/provider/photos_provider.dart';
@@ -182,7 +178,6 @@ class HomeScreen extends HookConsumerWidget {
               const SizedBox(
                 height: 10,
               ),
-              Text("Is pagination ${homephotos.isPaginationLoading}"),
               if (homephotos.isPaginationLoading) ...{
                 const Center(
                   child: CircularProgressIndicator(),
