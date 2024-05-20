@@ -33,9 +33,16 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
 
   getImage() async {
     prefs = await SharedPreferences.getInstance();
-    setState(() {
-      image = File(prefs.getString('userPickedImage') ?? "");
-    });
+
+    if (prefs.getString('userPickedImage') != null) {
+      setState(() {
+        image = File(prefs.getString('userPickedImage')!);
+      });
+    } else {
+      setState(() {
+        image = null;
+      });
+    }
   }
 
   @override
@@ -48,7 +55,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Widget build(BuildContext context) {
     final userProfData = ref.watch(userDataProvider);
     final dateController = useTextEditingController();
-
+    print("image url is ${image == null}");
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -102,6 +109,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             height: 200.0,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
+                              border: Border.all(color: Colors.grey),
                               image: DecorationImage(
                                   image: imageProvider, fit: BoxFit.cover),
                             ),
@@ -111,22 +119,17 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           errorWidget: (context, url, error) =>
                               const Icon(Icons.error),
                         )
-                      : CachedNetworkImage(
-                          imageUrl: userProfData?.photoURL ?? "",
-                          imageBuilder: (context, imageProvider) => Container(
-                            width: 150.0,
-                            height: 200.0,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                  image: FileImage(image!), fit: BoxFit.cover),
-                            ),
+                      : Container(
+                          width: 150.0,
+                          height: 200.0,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            border: Border.all(color: Colors.grey),
+                            image: DecorationImage(
+                                image: FileImage(image!), fit: BoxFit.cover),
                           ),
-                          placeholder: (context, url) =>
-                              const CircularProgressIndicator(),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error),
                         ),
+
                   // SizedBox(
                   //     width: 150.0, height: 200.0, child: Image.file(image!)),
                   Positioned(
