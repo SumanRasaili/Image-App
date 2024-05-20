@@ -155,7 +155,7 @@ class _GetAllPhotosProviderElement
   String? get nextPage => (origin as GetAllPhotosProvider).nextPage;
 }
 
-String _$searchPhotosHash() => r'13964452d9a9cb8b5bffb3c78a7159dfe699587b';
+String _$searchPhotosHash() => r'f0e55a1be2fe8e96602ce3beffed21b79cf68085';
 
 /// See also [searchPhotos].
 @ProviderFor(searchPhotos)
@@ -169,9 +169,11 @@ class SearchPhotosFamily extends Family<AsyncValue<PhotosModel>> {
   /// See also [searchPhotos].
   SearchPhotosProvider call({
     String? searchQuery,
+    required String? nextPageUrl,
   }) {
     return SearchPhotosProvider(
       searchQuery: searchQuery,
+      nextPageUrl: nextPageUrl,
     );
   }
 
@@ -181,6 +183,7 @@ class SearchPhotosFamily extends Family<AsyncValue<PhotosModel>> {
   ) {
     return call(
       searchQuery: provider.searchQuery,
+      nextPageUrl: provider.nextPageUrl,
     );
   }
 
@@ -204,10 +207,12 @@ class SearchPhotosProvider extends AutoDisposeFutureProvider<PhotosModel> {
   /// See also [searchPhotos].
   SearchPhotosProvider({
     String? searchQuery,
+    required String? nextPageUrl,
   }) : this._internal(
           (ref) => searchPhotos(
             ref as SearchPhotosRef,
             searchQuery: searchQuery,
+            nextPageUrl: nextPageUrl,
           ),
           from: searchPhotosProvider,
           name: r'searchPhotosProvider',
@@ -219,6 +224,7 @@ class SearchPhotosProvider extends AutoDisposeFutureProvider<PhotosModel> {
           allTransitiveDependencies:
               SearchPhotosFamily._allTransitiveDependencies,
           searchQuery: searchQuery,
+          nextPageUrl: nextPageUrl,
         );
 
   SearchPhotosProvider._internal(
@@ -229,9 +235,11 @@ class SearchPhotosProvider extends AutoDisposeFutureProvider<PhotosModel> {
     required super.debugGetCreateSourceHash,
     required super.from,
     required this.searchQuery,
+    required this.nextPageUrl,
   }) : super.internal();
 
   final String? searchQuery;
+  final String? nextPageUrl;
 
   @override
   Override overrideWith(
@@ -247,6 +255,7 @@ class SearchPhotosProvider extends AutoDisposeFutureProvider<PhotosModel> {
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
         searchQuery: searchQuery,
+        nextPageUrl: nextPageUrl,
       ),
     );
   }
@@ -258,13 +267,16 @@ class SearchPhotosProvider extends AutoDisposeFutureProvider<PhotosModel> {
 
   @override
   bool operator ==(Object other) {
-    return other is SearchPhotosProvider && other.searchQuery == searchQuery;
+    return other is SearchPhotosProvider &&
+        other.searchQuery == searchQuery &&
+        other.nextPageUrl == nextPageUrl;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
     hash = _SystemHash.combine(hash, searchQuery.hashCode);
+    hash = _SystemHash.combine(hash, nextPageUrl.hashCode);
 
     return _SystemHash.finish(hash);
   }
@@ -273,6 +285,9 @@ class SearchPhotosProvider extends AutoDisposeFutureProvider<PhotosModel> {
 mixin SearchPhotosRef on AutoDisposeFutureProviderRef<PhotosModel> {
   /// The parameter `searchQuery` of this provider.
   String? get searchQuery;
+
+  /// The parameter `nextPageUrl` of this provider.
+  String? get nextPageUrl;
 }
 
 class _SearchPhotosProviderElement
@@ -281,6 +296,8 @@ class _SearchPhotosProviderElement
 
   @override
   String? get searchQuery => (origin as SearchPhotosProvider).searchQuery;
+  @override
+  String? get nextPageUrl => (origin as SearchPhotosProvider).nextPageUrl;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -15,16 +15,17 @@ Future<PhotosModel> getAllPhotos(
   final response = await ApiBase.getRequest(
     path: nextPage ?? AppUrl.pixelUrl,
   );
-  print("The json response is ${response.data}");
-  print("The json uri is ${response.realUri}");
+
   return PhotosModel.fromJson(json.decode(response.data));
 }
 
 @riverpod
 Future<PhotosModel> searchPhotos(SearchPhotosRef ref,
-    {String? searchQuery}) async {
+    {String? searchQuery, required String? nextPageUrl}) async {
   final response = await ApiBase.getRequest(
-      path: AppUrl.searchPhotos,
+      path: nextPageUrl ?? AppUrl.searchPhotos,
       queryParameters: {if (searchQuery != null) "query": searchQuery});
+  print("The json response is ${response.data}");
+  print("The json uri is ${response.realUri}");
   return PhotosModel.fromJson(json.decode(response.data));
 }

@@ -13,77 +13,80 @@ class SearchPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final photoController = useTextEditingController();
     final photoList = ref.watch(searchNotifierProvider);
+    final photoNotifier = ref.watch(searchNotifierProvider.notifier);
     final isSearching = useState<bool>(false);
     final timer = useState<Timer?>(null);
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: const Text("Search"),
-          bottom: PreferredSize(
-              preferredSize: const Size(200, 60),
-              child: Padding(
-                padding: const EdgeInsets.only(left: 10, right: 10),
-                child: TextFormField(
-                  onTap: () {},
-                  onChanged: (value) {
-                    if (value.isNotEmpty) {
-                      isSearching.value = true;
-                      if (timer.value != null) {
-                        timer.value?.cancel();
-                      }
-                      timer.value = Timer(const Duration(seconds: 1), () async {
-                        ref
-                            .read(searchNotifierProvider.notifier)
-                            .searchPhotos(query: value);
-                        isSearching.value = false;
-                      });
+      appBar: AppBar(
+        centerTitle: true,
+        title: const Text("Search"),
+        bottom: PreferredSize(
+            preferredSize: const Size(200, 60),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: TextFormField(
+                onTap: () {},
+                onChanged: (value) {
+                  if (value.isNotEmpty) {
+                    isSearching.value = true;
+                    if (timer.value != null) {
+                      timer.value?.cancel();
                     }
-                  },
-                  controller: photoController,
-                  decoration: InputDecoration(
-                      isDense: true,
-                      contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-                      suffixIcon: photoController.text.isNotEmpty
-                          ? const Icon(Icons.close)
-                          : const Icon(Icons.search),
-                      hintText: "Search Photos",
-                      border: const OutlineInputBorder()),
-                ),
-              )),
-        ),
-        body: SingleChildScrollView(
-            child: Column(children: [
-          const SizedBox(
-            height: 10,
-          ),
-          if (isSearching.value &&
-              (photoList.photos == null || photoList.photos!.isEmpty)) ...{
-            const SizedBox(
-                height: 200,
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ))
-          } else if (!isSearching.value && photoList.photos == null) ...{
-            const SizedBox(
-              height: 200,
-              child: Center(child: Text("Nothing to Show")),
-            ),
-          } else
-            GridView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemCount:
-                  photoList.photos != null ? photoList.photos!.length : 0,
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                // childAspectRatio: 0.9,
-                crossAxisCount: 3,
-                crossAxisSpacing: 4,
-                mainAxisSpacing: 20,
+                    timer.value = Timer(const Duration(seconds: 1), () async {
+                      ref.read(searchNotifierProvider.notifier).searchPhotos(
+                            query: value,
+                          );
+                      isSearching.value = false;
+                    });
+                  }
+                },
+                controller: photoController,
+                decoration: InputDecoration(
+                    isDense: true,
+                    contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
+                    suffixIcon: photoController.text.isNotEmpty
+                        ? const Icon(Icons.close)
+                        : const Icon(Icons.search),
+                    hintText: "Search Photos",
+                    border: const OutlineInputBorder()),
               ),
-              itemBuilder: (context, index) {
-                return Padding(
-                    padding: const EdgeInsets.only(left: 10, right: 10),
-                    child: GestureDetector(
+            )),
+      ),
+      body: NotificationListener(
+        onNotification: photoNotifier.shouldPageNotify,
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 10,
+              ),
+              if (isSearching.value) ...{
+                const SizedBox(
+                    height: 200,
+                    child: Center(
+                      child: CircularProgressIndicator(),
+                    ))
+              } else if (!isSearching.value && photoList.photos == null) ...{
+                const SizedBox(
+                  height: 200,
+                  child: Center(child: Text("Nothing to Show")),
+                ),
+              } else
+                GridView.builder(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount:
+                      photoList.photos != null ? photoList.photos!.length : 0,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    // childAspectRatio: 0.9,
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 4,
+                    mainAxisSpacing: 20,
+                  ),
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(left: 10, right: 10),
+                      child: GestureDetector(
                         onTap: () {
                           showDialog(
                             context: context,
@@ -99,10 +102,29 @@ class SearchPage extends HookConsumerWidget {
                           );
                         },
                         child: CachedNetworkImage(
+                            placeholder: (context, url) {
+                              return Container(
+                                decoration:
+                                    BoxDecoration(color: Colors.grey.shade300),
+                              );
+                            },
                             imageUrl:
-                                photoList.photos?[index].src.portrait ?? "")));
-              },
-            )
-        ])));
+                                photoList.photos?[index].src.portrait ?? ""),
+                      ),
+                    );
+                  },
+                ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text("is pagination ${photoList.isPaginationLoading}"),
+              const SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

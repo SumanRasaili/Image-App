@@ -18,7 +18,7 @@ class PhotosModel {
         perPage: json["per_page"] ?? 0,
         photos: List<Photo>.from(json["photos"].map((x) => Photo.fromJson(x))),
         totalResults: json["total_results"],
-        nextPage: json["next_page"] ?? "",
+        nextPage: json["next_page"],
       );
 
   Map<String, dynamic> toJson() => {
