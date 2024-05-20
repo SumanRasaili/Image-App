@@ -7,9 +7,9 @@ class SearchModelState {
   final List<Photo>? photos;
 
   SearchModelState({
-     this.page,
-     this.photos,
-     this.isLoading,
+    this.page,
+    this.photos,
+    this.isLoading,
   });
 
   SearchModelState copyWith({
