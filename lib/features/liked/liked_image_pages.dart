@@ -10,7 +10,10 @@ class LikedImagesScreen extends ConsumerWidget {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
-        title: const Text("Liked Images Screen"),
+        title: const Text("Liked Images"),
+      ),
+      body: const Center(
+        child: Text("Liked images not found!"),
       ),
     );
   }

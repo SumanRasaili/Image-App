@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vritapp/features/auth/provider/user_data_notifier.dart';
 import 'package:vritapp/features/auth/repository/auth_repo.dart';
 import 'package:vritapp/features/auth/sign_in_screen.dart';
 import 'package:vritapp/features/base_page/dashboard_screen.dart';
@@ -14,16 +15,22 @@ class SplashScreen extends StatefulHookConsumerWidget {
 class _SplashScreenState extends ConsumerState<SplashScreen> {
   @override
   void initState() {
-    ref.read(userAuthProvider).getCurrentUserData().then((value) {
-      if (value != null) {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-          builder: (context) => const DashboardScreen(),
-        ));
-      } else {
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const SignInScreen(),
-        ));
-      }
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      ref.read(userAuthProvider).userState.listen((event) {
+        if (event != null) {
+          if (mounted) {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+              builder: (context) => const DashboardScreen(),
+            ));
+          }
+        } else {
+          if (mounted) {
+            Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const SignInScreen(),
+            ));
+          }
+        }
+      });
     });
 
     super.initState();
