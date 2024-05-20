@@ -27,10 +27,12 @@ class HomeScreen extends HookConsumerWidget {
         if (res) {
           BotToast.closeAllLoading();
           result.value = "Wallpaper set succesfully";
+          BotToast.showText(text: result.value);
         }
       } on PlatformException {
         BotToast.closeAllLoading();
         result.value = "Failed to load image";
+        BotToast.showText(text: result.value);
       }
     }
 
