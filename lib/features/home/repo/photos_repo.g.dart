@@ -6,21 +6,7 @@ part of 'photos_repo.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$getAllPhotosHash() => r'b9791a47baf21ffcce4a7f5d7646f1f3c836e323';
-
-/// See also [getAllPhotos].
-@ProviderFor(getAllPhotos)
-final getAllPhotosProvider = AutoDisposeFutureProvider<PhotosModel>.internal(
-  getAllPhotos,
-  name: r'getAllPhotosProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$getAllPhotosHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef GetAllPhotosRef = AutoDisposeFutureProviderRef<PhotosModel>;
-String _$searchPhotosHash() => r'13964452d9a9cb8b5bffb3c78a7159dfe699587b';
+String _$getAllPhotosHash() => r'a6c12305ead6d9da8e30ddaedd1839ccce205c2e';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -42,6 +28,134 @@ class _SystemHash {
     return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
   }
 }
+
+/// See also [getAllPhotos].
+@ProviderFor(getAllPhotos)
+const getAllPhotosProvider = GetAllPhotosFamily();
+
+/// See also [getAllPhotos].
+class GetAllPhotosFamily extends Family<AsyncValue<PhotosModel>> {
+  /// See also [getAllPhotos].
+  const GetAllPhotosFamily();
+
+  /// See also [getAllPhotos].
+  GetAllPhotosProvider call({
+    required String? nextPage,
+  }) {
+    return GetAllPhotosProvider(
+      nextPage: nextPage,
+    );
+  }
+
+  @override
+  GetAllPhotosProvider getProviderOverride(
+    covariant GetAllPhotosProvider provider,
+  ) {
+    return call(
+      nextPage: provider.nextPage,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'getAllPhotosProvider';
+}
+
+/// See also [getAllPhotos].
+class GetAllPhotosProvider extends AutoDisposeFutureProvider<PhotosModel> {
+  /// See also [getAllPhotos].
+  GetAllPhotosProvider({
+    required String? nextPage,
+  }) : this._internal(
+          (ref) => getAllPhotos(
+            ref as GetAllPhotosRef,
+            nextPage: nextPage,
+          ),
+          from: getAllPhotosProvider,
+          name: r'getAllPhotosProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$getAllPhotosHash,
+          dependencies: GetAllPhotosFamily._dependencies,
+          allTransitiveDependencies:
+              GetAllPhotosFamily._allTransitiveDependencies,
+          nextPage: nextPage,
+        );
+
+  GetAllPhotosProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.nextPage,
+  }) : super.internal();
+
+  final String? nextPage;
+
+  @override
+  Override overrideWith(
+    FutureOr<PhotosModel> Function(GetAllPhotosRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: GetAllPhotosProvider._internal(
+        (ref) => create(ref as GetAllPhotosRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        nextPage: nextPage,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<PhotosModel> createElement() {
+    return _GetAllPhotosProviderElement(this);
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return other is GetAllPhotosProvider && other.nextPage == nextPage;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, nextPage.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+mixin GetAllPhotosRef on AutoDisposeFutureProviderRef<PhotosModel> {
+  /// The parameter `nextPage` of this provider.
+  String? get nextPage;
+}
+
+class _GetAllPhotosProviderElement
+    extends AutoDisposeFutureProviderElement<PhotosModel> with GetAllPhotosRef {
+  _GetAllPhotosProviderElement(super.provider);
+
+  @override
+  String? get nextPage => (origin as GetAllPhotosProvider).nextPage;
+}
+
+String _$searchPhotosHash() => r'13964452d9a9cb8b5bffb3c78a7159dfe699587b';
 
 /// See also [searchPhotos].
 @ProviderFor(searchPhotos)

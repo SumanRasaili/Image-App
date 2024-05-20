@@ -2,24 +2,28 @@
 import 'package:vritapp/core/model/photos_model.dart';
 
 class PhotosModelState {
-  final int? page;
-  bool? isLoading;
+  final String? nextPageUrl;
+  bool isLoading;
+  bool isPaginationLoading;
   final List<Photo>? photos;
 
   PhotosModelState({
-     this.page,
-     this.photos,
-     this.isLoading,
+    this.nextPageUrl,
+    this.photos,
+    this.isLoading = true,
+    this.isPaginationLoading = false,
   });
 
   PhotosModelState copyWith({
-    int? page,
+    String? nextPageUrl,
     bool? isLoading,
+    bool? isPaginationLoading,
     List<Photo>? photos,
   }) {
     return PhotosModelState(
-      page: page ?? this.page,
+      nextPageUrl: nextPageUrl ?? this.nextPageUrl,
       isLoading: isLoading ?? this.isLoading,
+      isPaginationLoading: isPaginationLoading ?? this.isPaginationLoading,
       photos: photos ?? this.photos,
     );
   }

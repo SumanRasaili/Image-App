@@ -9,11 +9,14 @@ part 'photos_repo.g.dart';
 
 @riverpod
 Future<PhotosModel> getAllPhotos(
-  GetAllPhotosRef ref,
-) async {
+  GetAllPhotosRef ref, {
+  required String? nextPage,
+}) async {
   final response = await ApiBase.getRequest(
-    path: AppUrl.pixelUrl,
+    path: nextPage ?? AppUrl.pixelUrl,
   );
+  print("The json response is ${response.data}");
+  print("The json uri is ${response.realUri}");
   return PhotosModel.fromJson(json.decode(response.data));
 }
 

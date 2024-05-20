@@ -55,7 +55,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   Widget build(BuildContext context) {
     final userProfData = ref.watch(userDataProvider);
     final dateController = useTextEditingController();
-    print("image url is ${image == null}");
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -183,7 +183,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 style: TextStyle(fontSize: 18),
               ),
               const SizedBox(
-                height: 5,
+                height: 10,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 23),

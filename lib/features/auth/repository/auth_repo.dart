@@ -1,6 +1,5 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -48,7 +47,7 @@ class AuthRepo {
       userData = firebaseAuth.currentUser;
       return userData;
     } on FirebaseAuthException catch (e) {
-      print("The user data error is ${e.toString()}");
+      debugPrint("The user data error is ${e.toString()}");
     }
     return userData;
   }

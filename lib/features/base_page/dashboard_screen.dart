@@ -16,11 +16,11 @@ class DashboardScreen extends HookConsumerWidget {
     return PopScope(
       canPop: false,
       onPopInvoked: (didPop) {
+        if (didPop) return;
         if (selectedIndex.value != 0) {
           selectedIndex.value = selectedIndex.value - 1;
           return;
         }
-
         showDialog(
           context: context,
           builder: (ctx) {

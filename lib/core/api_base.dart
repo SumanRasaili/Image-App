@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:vritapp/core/model/photos_model.dart';
 
 class ApiBase {
   static final _dio = Dio();

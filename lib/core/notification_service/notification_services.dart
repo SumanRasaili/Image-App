@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 class Notificationservice {
@@ -10,7 +11,7 @@ class Notificationservice {
     final DarwinInitializationSettings initializationSetingsDarwin =
         DarwinInitializationSettings(
       onDidReceiveLocalNotification: (id, title, body, payload) {
-        print("$id $title $body $payload");
+        debugPrint("$id $title $body $payload");
       },
     );
     AndroidInitializationSettings initializationSettingsAndroid =

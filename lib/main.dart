@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vritapp/core/notification_service/notification_services.dart';
-import 'package:vritapp/features/auth/provider/user_data_notifier.dart';
 import 'package:vritapp/firebase_options.dart';
 import 'package:vritapp/splash_screen.dart';
 

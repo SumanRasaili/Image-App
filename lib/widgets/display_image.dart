@@ -23,7 +23,14 @@ class DisplayImage extends ConsumerWidget {
           children: [
             Hero(
               tag: id,
-              child: CachedNetworkImage(imageUrl: image),
+              child: CachedNetworkImage(
+                  placeholder: (context, url) {
+                    return SizedBox(
+                        height: MediaQuery.of(context).size.height * .7,
+                        child:
+                            const Center(child: CircularProgressIndicator()));
+                  },
+                  imageUrl: image),
             )
           ],
         ),

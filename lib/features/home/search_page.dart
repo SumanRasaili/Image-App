@@ -56,7 +56,8 @@ class SearchPage extends HookConsumerWidget {
           const SizedBox(
             height: 10,
           ),
-          if (isSearching.value && (photoList.photos == null)) ...{
+          if (isSearching.value &&
+              (photoList.photos == null || photoList.photos!.isEmpty)) ...{
             const SizedBox(
                 height: 200,
                 child: Center(
@@ -90,7 +91,8 @@ class SearchPage extends HookConsumerWidget {
                               return Dialog(
                                 child: InteractiveViewer(
                                   child: Image.network(
-                                      photoList.photos?[index].src.large ?? ""),
+                                      photoList.photos?[index].src.portrait ??
+                                          ""),
                                 ),
                               );
                             },

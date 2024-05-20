@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vritapp/features/auth/provider/user_data_notifier.dart';
 import 'package:vritapp/features/auth/repository/auth_repo.dart';
 import 'package:vritapp/features/auth/sign_in_screen.dart';
 import 'package:vritapp/features/base_page/dashboard_screen.dart';
