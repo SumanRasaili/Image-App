@@ -17,7 +17,7 @@ class HomeScreen extends HookConsumerWidget {
     final homephotos = ref.watch(homeNotifierProvider);
     final homeNotifier = ref.watch(homeNotifierProvider.notifier);
     final photoController = useTextEditingController();
-
+    
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -120,9 +120,8 @@ class HomeScreen extends HookConsumerWidget {
                             children: [
                               IconButton(
                                   iconSize: 30,
-                                  color: Colors.red.shade300,
                                   onPressed: () async {
-                                    final likedModel = LikedPhotosModel(
+                                    final likedModel = LikedPhotos(
                                         id: "${homephotos.photos?[index].id}",
                                         imageUrl: homephotos
                                                 .photos?[index].src.portrait ??
@@ -133,7 +132,10 @@ class HomeScreen extends HookConsumerWidget {
                                             likedPhotosModel: likedModel,
                                             context: context);
                                   },
-                                  icon: const Icon(Icons.favorite)),
+                                  icon: Icon(
+                                    Icons.favorite_border,
+                                    color: Colors.red.shade300,
+                                  )),
                               IconButton(
                                   iconSize: 30,
                                   color: Colors.amber,

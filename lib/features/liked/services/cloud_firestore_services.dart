@@ -6,9 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:vritapp/core/model/liked_photos_model.dart';
 
-final likedphotosProvider = StreamProvider((ref) {
-  return ref.read(firebaseFirestoreProvider).getAllLikedPhotos();
-});
 final firebaseFirestoreProvider = Provider<CloudFirestoreServices>((ref) {
   return CloudFirestoreServices(
       firebaseFirestore: FirebaseFirestore.instance,
@@ -21,7 +18,7 @@ class CloudFirestoreServices {
   CloudFirestoreServices(
       {required this.firebaseFirestore, required this.firebaseAuth});
   Future<void> addToLiked(
-      {required LikedPhotosModel likedPhotosModel,
+      {required LikedPhotos likedPhotosModel,
       required BuildContext context}) async {
     final photosModel = {
       "id": likedPhotosModel.id,
@@ -37,7 +34,7 @@ class CloudFirestoreServices {
           .doc(likedPhotosModel.id)
           .get();
 
-      final resp = LikedPhotosModel.fromMap(mapData.data() ?? {});
+      final resp = LikedPhotos.fromMap(mapData.data() ?? {});
       print(resp.id);
 
       if (resp.id == likedPhotosModel.id) {
@@ -61,16 +58,16 @@ class CloudFirestoreServices {
     }
   }
 
-  Stream<List<LikedPhotosModel>> getAllLikedPhotos() {
+  Stream<List<LikedPhotos>> getAllLikedPhotos() {
     return firebaseFirestore
         .collection("users")
         .doc(firebaseAuth.currentUser?.uid)
         .collection("liked_photos")
         .snapshots()
         .map((event) {
-      List<LikedPhotosModel> likedList = [];
+      List<LikedPhotos> likedList = [];
       for (var doc in event.docs) {
-        likedList.add(LikedPhotosModel.fromMap(doc.data()));
+        likedList.add(LikedPhotos.fromMap(doc.data()));
       }
       return likedList;
     });

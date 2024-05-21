@@ -1,8 +1,7 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-class LikedPhotosModel {
+class LikedPhotos {
   final String? id;
   final String? imageUrl;
-  LikedPhotosModel({
+  LikedPhotos({
     required this.id,
     required this.imageUrl,
   });
@@ -14,10 +13,10 @@ class LikedPhotosModel {
     };
   }
 
-  factory LikedPhotosModel.fromMap(Map<String, dynamic> map) {
-    return LikedPhotosModel(
+  factory LikedPhotos.fromMap(Map<String, dynamic> map) {
+    return LikedPhotos(
       id: map['id'] ?? "",
-      imageUrl: map['image'] ??"",
+      imageUrl: map['image'] ?? "",
     );
   }
 }
