@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vritapp/common/common_components.dart';
+import 'package:vritapp/core/model/liked_photos_model.dart';
 import 'package:vritapp/features/home/provider/photos_provider.dart';
 import 'package:vritapp/features/home/search_page.dart';
+import 'package:vritapp/features/liked/services/cloud_firestore_services.dart';
 import 'package:vritapp/widgets/display_image.dart';
 
 class HomeScreen extends HookConsumerWidget {
@@ -15,7 +17,6 @@ class HomeScreen extends HookConsumerWidget {
     final homephotos = ref.watch(homeNotifierProvider);
     final homeNotifier = ref.watch(homeNotifierProvider.notifier);
     final photoController = useTextEditingController();
-    final result = useState<String>("");
 
     return Scaffold(
       appBar: AppBar(
@@ -120,7 +121,18 @@ class HomeScreen extends HookConsumerWidget {
                               IconButton(
                                   iconSize: 30,
                                   color: Colors.red.shade300,
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    final likedModel = LikedPhotosModel(
+                                        id: "${homephotos.photos?[index].id}",
+                                        imageUrl: homephotos
+                                                .photos?[index].src.portrait ??
+                                            "");
+                                    await ref
+                                        .read(firebaseFirestoreProvider)
+                                        .addToLiked(
+                                            likedPhotosModel: likedModel,
+                                            context: context);
+                                  },
                                   icon: const Icon(Icons.favorite)),
                               IconButton(
                                   iconSize: 30,
