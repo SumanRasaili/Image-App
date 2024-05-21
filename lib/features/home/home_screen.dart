@@ -17,7 +17,7 @@ class HomeScreen extends HookConsumerWidget {
     final homephotos = ref.watch(homeNotifierProvider);
     final homeNotifier = ref.watch(homeNotifierProvider.notifier);
     final photoController = useTextEditingController();
-    
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -85,7 +85,7 @@ class HomeScreen extends HookConsumerWidget {
                               onTap: () {
                                 Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => DisplayImage(
-                                    id: "${homephotos.photos?[index].id}",
+                                    id: index.toString(),
                                     image:
                                         homephotos.photos?[index].src.large ??
                                             "",
@@ -97,7 +97,7 @@ class HomeScreen extends HookConsumerWidget {
                                     borderRadius:
                                         BorderRadius.all(Radius.circular(10))),
                                 child: Hero(
-                                  tag: "${homephotos.photos?[index].id}",
+                                  tag: index.toString(),
                                   child: CachedNetworkImage(
                                       placeholder: (context, url) {
                                         return Container(
