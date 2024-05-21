@@ -24,7 +24,7 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
           }
         } else {
           if (mounted) {
-            Navigator.of(context).push(MaterialPageRoute(
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
               builder: (context) => const SignInScreen(),
             ));
           }

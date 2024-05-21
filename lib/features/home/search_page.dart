@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vritapp/common/common_components.dart';
+import 'package:vritapp/core/model/liked_photos_model.dart';
 import 'package:vritapp/features/home/provider/search_provider.dart';
+import 'package:vritapp/features/liked/services/cloud_firestore_services.dart';
 
 class SearchPage extends HookConsumerWidget {
   const SearchPage({super.key});
@@ -26,7 +28,13 @@ class SearchPage extends HookConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
               child: TextFormField(
-                onTap: () {},
+                onFieldSubmitted: (value) async {
+                  if (value.isNotEmpty) {
+                    ref.read(searchNotifierProvider.notifier).searchPhotos(
+                          query: value,
+                        );
+                  }
+                },
                 onChanged: (value) {
                   isSearching.value = true;
                   if (timer.value != null) {
@@ -65,8 +73,8 @@ class SearchPage extends HookConsumerWidget {
                     child: Center(
                       child: CircularProgressIndicator(),
                     ))
-              } else if (!isSearching.value &&
-                  (photoList.photos == null || photoList.photos!.isEmpty)) ...{
+              } else if ((photoList.photos == null ||
+                  photoList.photos!.isEmpty)) ...{
                 const SizedBox(
                   height: 200,
                   child: Center(child: Text("Nothing to Show")),
@@ -117,7 +125,18 @@ class SearchPage extends HookConsumerWidget {
                               IconButton(
                                   iconSize: 20,
                                   color: Colors.red.shade300,
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    final likedModel = LikedPhotos(
+                                        id: "${photoList.photos?[index].id}",
+                                        imageUrl: photoList
+                                                .photos?[index].src.portrait ??
+                                            "");
+                                    await ref
+                                        .read(firebaseFirestoreProvider)
+                                        .addToLiked(
+                                            likedPhotosModel: likedModel,
+                                            context: context);
+                                  },
                                   icon: const Icon(Icons.favorite)),
                               IconButton(
                                   iconSize: 20,
