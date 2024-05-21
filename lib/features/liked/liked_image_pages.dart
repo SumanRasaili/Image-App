@@ -7,7 +7,6 @@ class LikedImagesScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final data = ref.watch(localPhotosServiceProvider);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -17,18 +16,7 @@ class LikedImagesScreen extends ConsumerWidget {
       body: Center(
           child: Column(
         children: [
-          FutureBuilder(
-            future: data.getAllLikedPhotos(),
-            builder: (context, snapshot) {
-              return ListView.builder(
-                shrinkWrap: true,
-                itemCount: snapshot.data?.length,
-                itemBuilder: (context, index) {
-                  return Text(snapshot.data?[index].title ?? "");
-                },
-              );
-            },
-          )
+ 
         ],
       )),
     );
