@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vritapp/features/home/provider/liked_state_notifier.dart';
+import 'package:vritapp/widgets/display_image.dart';
 
 class LikedImagesScreen extends ConsumerWidget {
   const LikedImagesScreen({super.key});
@@ -43,10 +44,21 @@ class LikedImagesScreen extends ConsumerWidget {
                 itemCount: streamData.likedPics!.length,
                 itemBuilder: (context, index) {
                   return GridTile(
+                      child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => DisplayImage(
+                              image: "${streamData.likedPics?[index].imageUrl}",
+                              id: "${streamData.likedPics?[index].id}")));
+                    },
+                    child: Hero(
+                      tag: "$index",
                       child: CachedNetworkImage(
                           fit: BoxFit.cover,
                           imageUrl:
-                              streamData.likedPics![index].imageUrl ?? ""));
+                              streamData.likedPics![index].imageUrl ?? ""),
+                    ),
+                  ));
                 },
               ),
           ]),
