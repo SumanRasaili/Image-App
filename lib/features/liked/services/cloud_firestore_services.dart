@@ -3,8 +3,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:vritapp/core/model/liked_photos_model.dart';
+import 'package:vritapp/features/home/provider/liked_state_notifier.dart';
+import 'package:vritapp/features/home/provider/photos_provider.dart';
 
 final firebaseFirestoreProvider = Provider<CloudFirestoreServices>((ref) {
   return CloudFirestoreServices(
@@ -19,6 +22,7 @@ class CloudFirestoreServices {
       {required this.firebaseFirestore, required this.firebaseAuth});
   Future<void> addToLiked(
       {required LikedPhotos likedPhotosModel,
+      required WidgetRef ref,
       required BuildContext context}) async {
     final photosModel = {
       "id": likedPhotosModel.id,
@@ -50,6 +54,7 @@ class CloudFirestoreServices {
             .then((value) {
           BotToast.closeAllLoading();
           BotToast.showText(text: "Added to liked");
+          ref.invalidate(homeNotifierProvider);
         });
       }
     } on Firebase catch (e) {

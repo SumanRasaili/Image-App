@@ -134,6 +134,7 @@ class SearchPage extends HookConsumerWidget {
                                     await ref
                                         .read(firebaseFirestoreProvider)
                                         .addToLiked(
+                                            ref: ref,
                                             likedPhotosModel: likedModel,
                                             context: context);
                                   },

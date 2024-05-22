@@ -4,6 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vritapp/common/common_components.dart';
 import 'package:vritapp/core/model/liked_photos_model.dart';
+import 'package:vritapp/features/home/provider/liked_state_notifier.dart';
 import 'package:vritapp/features/home/provider/photos_provider.dart';
 import 'package:vritapp/features/home/search_page.dart';
 import 'package:vritapp/features/liked/services/cloud_firestore_services.dart';
@@ -16,6 +17,7 @@ class HomeScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final homephotos = ref.watch(homeNotifierProvider);
     final homeNotifier = ref.watch(homeNotifierProvider.notifier);
+    final likedProv = ref.watch(likedProvider.notifier);
     final photoController = useTextEditingController();
 
     return Scaffold(
@@ -129,13 +131,20 @@ class HomeScreen extends HookConsumerWidget {
                                     await ref
                                         .read(firebaseFirestoreProvider)
                                         .addToLiked(
+                                            ref: ref,
                                             likedPhotosModel: likedModel,
                                             context: context);
                                   },
-                                  icon: Icon(
-                                    Icons.favorite_border,
-                                    color: Colors.red.shade300,
-                                  )),
+                                  icon:
+                                      likedProv.isPhotoLiked(index, homephotos)
+                                          ? const Icon(
+                                              Icons.favorite,
+                                              color: Colors.red,
+                                            )
+                                          : Icon(
+                                              Icons.favorite_border,
+                                              color: Colors.red.shade300,
+                                            )),
                               IconButton(
                                   iconSize: 30,
                                   color: Colors.amber,

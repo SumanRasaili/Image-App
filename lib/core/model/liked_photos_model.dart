@@ -1,8 +1,10 @@
 class LikedPhotos {
   final String? id;
   final String? imageUrl;
+  bool isLiked;
   LikedPhotos({
     required this.id,
+    this.isLiked = false,
     required this.imageUrl,
   });
 
