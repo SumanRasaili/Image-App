@@ -1,7 +1,11 @@
+import 'dart:io';
+import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:bot_toast/bot_toast.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -79,5 +83,26 @@ class CommonRepo {
       BotToast.closeAllLoading();
       BotToast.showText(text: "Failed to share ");
     }
+  }
+
+  Future<void> saveImageToGallery({required String imageUrl}) async {
+    try {
+      //to download image
+      final response = await Dio().get(imageUrl);
+      //to get temp directory
+      final dir = await getTemporaryDirectory();
+
+      //create a file name
+      var fileName = "${dir.path}/image.png";
+
+//for saving to fileSystem
+      var file = File(fileName);
+      var raf = file.openSync(mode: FileMode.write);
+      raf.writeFromSync(response.data);
+      await raf.close();
+
+      //showing dialog to save user to whichj location using package
+      final params = SaveFileDialogParams()
+    } catch (e) {}
   }
 }
