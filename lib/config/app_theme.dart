@@ -1,8 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:vritapp/config/app_colors.dart';
 import 'package:vritapp/config/config.dart';
 
 ThemeData lightThemeData() {
   return ThemeData(
+      iconTheme: IconThemeData(size: 25, color: AppColors.whiteColor),
+      listTileTheme: ListTileThemeData(
+          iconColor: AppColors.whiteColor,
+          titleTextStyle: TextStyle(fontSize: 14, color: AppColors.whiteColor)),
+      bottomSheetTheme: BottomSheetThemeData(
+        backgroundColor: AppColors.scaffoldBackGroundColor,
+      ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ButtonStyle(
           textStyle: const MaterialStatePropertyAll(TextStyle(
