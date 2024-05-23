@@ -301,9 +301,10 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           onTap: () async {
                             DateTime? pickedDate = await showDatePicker(
                                 context: context,
-                                firstDate: DateTime.now(),
-                                lastDate: DateTime.now()
-                                    .add(const Duration(days: 7)));
+                                firstDate: DateTime(2020, 01, 01),
+                                lastDate: DateTime(
+                                  DateTime.now().year + 5,
+                                ));
 
                             if (pickedDate != null) {
                               var today = DateTime.now().day;

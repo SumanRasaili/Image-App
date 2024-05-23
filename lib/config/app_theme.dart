@@ -4,6 +4,35 @@ import 'package:vritapp/config/config.dart';
 
 ThemeData lightThemeData() {
   return ThemeData(
+      datePickerTheme: DatePickerThemeData(
+          rangePickerSurfaceTintColor: AppColors.whiteColor,
+          inputDecorationTheme: InputDecorationTheme(
+              fillColor: AppColors.whiteColor,
+              filled: true,
+              labelStyle: TextStyle(color: AppColors.whiteColor),
+              hintStyle: TextStyle(
+                color: AppColors.whiteColor,
+              )),
+          headerForegroundColor: AppColors.whiteColor,
+          shadowColor: AppColors.whiteColor,
+          rangePickerShadowColor: AppColors.whiteColor,
+          rangeSelectionOverlayColor:
+              MaterialStatePropertyAll(AppColors.whiteColor),
+          rangePickerHeaderBackgroundColor: AppColors.whiteColor,
+          rangePickerBackgroundColor: AppColors.whiteColor,
+          todayForegroundColor: MaterialStatePropertyAll(AppColors.whiteColor),
+          yearStyle: TextStyle(color: AppColors.whiteColor),
+          yearForegroundColor: MaterialStatePropertyAll(AppColors.whiteColor),
+          rangePickerHeaderForegroundColor: AppColors.whiteColor,
+          rangePickerHeaderHeadlineStyle:
+              TextStyle(color: AppColors.whiteColor),
+          rangePickerHeaderHelpStyle: TextStyle(color: AppColors.whiteColor),
+          headerHeadlineStyle: TextStyle(color: AppColors.whiteColor),
+          weekdayStyle: TextStyle(color: AppColors.whiteColor),
+          dayForegroundColor: MaterialStatePropertyAll(AppColors.whiteColor),
+          dayStyle: TextStyle(color: AppColors.whiteColor),
+          backgroundColor: AppColors.scaffoldBackGroundColor,
+          todayBackgroundColor: const MaterialStatePropertyAll(Colors.black)),
       dialogTheme:
           DialogTheme(backgroundColor: AppColors.scaffoldBackGroundColor),
       iconTheme: IconThemeData(size: 25, color: AppColors.whiteColor),
