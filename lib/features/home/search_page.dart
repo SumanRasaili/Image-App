@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vritapp/common/components/custom_text_field.dart';
+import 'package:vritapp/config/app_colors.dart';
 import 'package:vritapp/core/model/liked_photos_model.dart';
 import 'package:vritapp/features/home/provider/search_provider.dart';
 import 'package:vritapp/features/liked/services/cloud_firestore_services.dart';
@@ -48,7 +49,7 @@ class SearchPage extends HookConsumerWidget {
                   });
                 },
                 labelText: "Photos",
-                readOnly: true,
+                readOnly: false,
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const SearchPage(),
@@ -74,9 +75,19 @@ class SearchPage extends HookConsumerWidget {
                     ))
               } else if ((photoList.photos == null ||
                   photoList.photos!.isEmpty)) ...{
-                const SizedBox(
-                  height: 200,
-                  child: Center(child: Text("Nothing to Show")),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height -
+                      (kTextTabBarHeight +
+                          kBottomNavigationBarHeight +
+                          kToolbarHeight),
+                  child: Center(
+                      child: Text(
+                    "Nothing to Show",
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge
+                        ?.copyWith(color: AppColors.whiteColor),
+                  )),
                 ),
               } else
                 GridView.builder(
