@@ -4,6 +4,8 @@ import 'package:vritapp/config/config.dart';
 
 ThemeData lightThemeData() {
   return ThemeData(
+      dialogTheme:
+          DialogTheme(backgroundColor: AppColors.scaffoldBackGroundColor),
       iconTheme: IconThemeData(size: 25, color: AppColors.whiteColor),
       listTileTheme: ListTileThemeData(
           iconColor: AppColors.whiteColor,

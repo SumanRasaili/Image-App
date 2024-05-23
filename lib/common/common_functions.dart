@@ -70,7 +70,6 @@ class CommonRepo {
     try {
       BotToast.showLoading();
       final result = await Share.shareUri(Uri.parse(image));
-      print("Stat resul;t is $result");
       if (result.status == ShareResultStatus.success) {
         BotToast.closeAllLoading();
         BotToast.showText(text: "Shared succesfully");
@@ -99,7 +98,6 @@ class CommonRepo {
               validateStatus: (status) {
                 return status! < 500;
               }));
-      print("response ${response.data.toString()}");
 
       //to get temp directory
       final dir = await getTemporaryDirectory();

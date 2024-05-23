@@ -1,16 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:vritapp/features/home/model/photos_model.dart';
-import 'package:vritapp/widgets/display_image.dart';
 
 class CustomGridView extends StatelessWidget {
   final List<Photo> photos;
- final Widget child;
-  const CustomGridView(
-      {
-        required this.child,
-      required this.photos,
-      super.key});
+  final Widget child;
+  const CustomGridView({required this.child, required this.photos, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +20,7 @@ class CustomGridView extends StatelessWidget {
         mainAxisSpacing: 12,
       ),
       itemBuilder: (context, index) {
-        return  child;
+        return child;
       },
     );
   }

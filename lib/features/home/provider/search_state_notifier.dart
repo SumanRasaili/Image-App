@@ -27,8 +27,6 @@ class SearchNotifier extends StateNotifier<SearchModelState> {
         searchPhotosProvider(searchQuery: query, nextPageUrl: nextPageUrl)
             .future);
     if (nextPageUrl == null) {
-      print(" not pagination case");
-      print("pnot paginateg =-========== ${response.nextPage}");
       state = state.copyWith(
           isLoading: true,
           photos: response.photos,
@@ -37,16 +35,22 @@ class SearchNotifier extends StateNotifier<SearchModelState> {
         isLoading: false,
       );
     } else {
-      print("pagination case");
       state = state.copyWith(
         isPaginationLoading: true,
         nextPageUrl: response.nextPage,
         photos: [...state.photos ?? [], ...response.photos],
       );
-      print("The state response is ${state.photos}");
       state = state.copyWith(
         isPaginationLoading: false,
       );
     }
+  }
+
+  clearSearch() {
+    state = state.copyWith(
+      photos: [],
+      nextPageUrl: "",
+      isPaginationLoading: false,
+    );
   }
 }

@@ -11,7 +11,6 @@ class LikedImagesScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final streamData = ref.watch(likedProvider);
-    final likedNotifier = ref.watch(likedProvider.notifier);
 
     return Scaffold(
         appBar: AppBar(

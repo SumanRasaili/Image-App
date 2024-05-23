@@ -35,10 +35,7 @@ class CloudFirestoreServices {
           .collection("liked_photos")
           .doc(likedPhotosModel.id)
           .get();
-
       final resp = LikedPhotos.fromMap(mapData.data() ?? {});
-      print(resp.id);
-
       if (resp.id == likedPhotosModel.id) {
         BotToast.closeAllLoading();
         BotToast.showText(text: "Already added");

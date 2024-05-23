@@ -189,33 +189,142 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 23),
                 child: Container(
                     decoration: const BoxDecoration(),
-                    child: CustomTextField(
-                      readOnly: true,
-                      labelText: "Date",
-                      onTap: () async {
-                        DateTime? pickedDate = await showDatePicker(
-                            context: context,
-                            firstDate: DateTime.now(),
-                            lastDate:
-                                DateTime.now().add(const Duration(days: 7)));
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Text(
+                              "Date",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall
+                                  ?.copyWith(
+                                      color: AppColors.whiteColor,
+                                      fontSize: 14),
+                            ),
+                            IconButton(
+                                onPressed: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (builder) {
+                                        return Dialog(
+                                          insetPadding: EdgeInsets.symmetric(
+                                              horizontal: 20,
+                                              vertical: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.31),
+                                          child: Center(
+                                            child: Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      vertical: 20,
+                                                      horizontal: 20),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "Suggestion",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleLarge
+                                                        ?.copyWith(
+                                                            fontSize: 20,
+                                                            color: AppColors
+                                                                .whiteColor),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 20,
+                                                  ),
+                                                  Text(
+                                                    "Here, If your BirthDate matches with the Today's Date you will receive a BirtDay Messages.. YAYYY",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleMedium
+                                                        ?.copyWith(
+                                                            fontSize: 18,
+                                                            color: AppColors
+                                                                .whiteColor),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 20,
+                                                  ),
+                                                  Text(
+                                                    "So Lets try",
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .titleSmall
+                                                        ?.copyWith(
+                                                            fontSize: 16,
+                                                            color: AppColors
+                                                                .whiteColor),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 10,
+                                                  ),
+                                                  Center(
+                                                    child: FilledButton(
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child: Text(
+                                                          "CLOSE",
+                                                          style: Theme.of(
+                                                                  context)
+                                                              .textTheme
+                                                              .titleSmall
+                                                              ?.copyWith(
+                                                                  color: AppColors
+                                                                      .whiteColor),
+                                                        )),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      });
+                                },
+                                icon: const Icon(Icons.info))
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        CustomTextField(
+                          hintText: "Select Date",
+                          readOnly: true,
+                          labelText: " Select Date",
+                          onTap: () async {
+                            DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                firstDate: DateTime.now(),
+                                lastDate: DateTime.now()
+                                    .add(const Duration(days: 7)));
 
-                        if (pickedDate != null) {
-                          var today = DateTime.now().day;
-                          var month = DateTime.now().month;
-                          var year = DateTime.now().year;
-                          if (pickedDate.year == year &&
-                              pickedDate.month == month &&
-                              pickedDate.day == today) {
-                            Notificationservice().showNotificationdetail();
-                          } else {
-                            BotToast.showText(text: "Mystery remain unsolved");
-                          }
+                            if (pickedDate != null) {
+                              var today = DateTime.now().day;
+                              var month = DateTime.now().month;
+                              var year = DateTime.now().year;
+                              if (pickedDate.year == year &&
+                                  pickedDate.month == month &&
+                                  pickedDate.day == today) {
+                                Notificationservice().showNotificationdetail();
+                              } else {
+                                BotToast.showText(
+                                    text: "Mystery remain unsolved");
+                              }
 
-                          dateController.text =
-                              DateFormat("yyyy-MM-dd").format(pickedDate);
-                        }
-                      },
-                      controller: dateController,
+                              dateController.text =
+                                  DateFormat("yyyy-MM-dd").format(pickedDate);
+                            }
+                          },
+                          controller: dateController,
+                        ),
+                      ],
                     )),
               )
             ],

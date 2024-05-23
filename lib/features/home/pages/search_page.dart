@@ -49,9 +49,14 @@ class _SearchPageState extends ConsumerState<SearchPage> {
                     timer.value?.cancel();
                   }
                   timer.value = Timer(const Duration(seconds: 1), () async {
-                    ref.read(searchNotifierProvider.notifier).searchPhotos(
-                          query: value,
-                        );
+                    if (value.isNotEmpty) {
+                      ref.read(searchNotifierProvider.notifier).searchPhotos(
+                            query: value,
+                          );
+                    } else {
+                      photoNotifier.clearSearch();
+                    }
+
                     isSearching.value = false;
                     if (focusNode.hasFocus) {
                       focusNode.unfocus();
@@ -60,6 +65,7 @@ class _SearchPageState extends ConsumerState<SearchPage> {
                 },
                 labelText: "Photos",
                 readOnly: false,
+                hintText: "Search photos as mountains,nature here",
                 focusNode: focusNode,
                 controller: photoController,
               ),
