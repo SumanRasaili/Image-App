@@ -102,18 +102,21 @@ class CommonRepo {
 
       //to get temp directory
       final dir = await getTemporaryDirectory();
-
+      print("The temp dir path is ${dir.path}");
       //create a file name
       var fileName = "${dir.path}/image.png";
+      print("The file Name");
 
 //for saving to fileSystem
       var file = File(fileName);
+      print("File path =${file.path}");
       var raf = file.openSync(mode: FileMode.write);
       raf.writeFromSync(response.data);
       await raf.close();
       BotToast.closeAllLoading();
       //showing dialog to save user to whichj location using package
-      final params = SaveFileDialogParams(sourceFilePath: file.path);
+      final params =
+          SaveFileDialogParams(sourceFilePath: file.path, fileName: fileName);
       final finalPath = await FlutterFileDialog.saveFile(params: params);
       if (finalPath != null) {
         BotToast.closeAllLoading();
