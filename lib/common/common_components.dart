@@ -3,9 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 final commonfuncProvider = Provider<CommonRepo>((ref) {
   return CommonRepo();
 });
+
 class CommonRepo {
   Future<void> setwallPaper({required String image}) async {
     var file = await DefaultCacheManager().getSingleFile(image);

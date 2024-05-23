@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vritapp/features/auth/repository/auth_repo.dart';
@@ -12,10 +14,11 @@ class SplashScreen extends StatefulHookConsumerWidget {
 }
 
 class _SplashScreenState extends ConsumerState<SplashScreen> {
+  StreamSubscription? streamSubscription;
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      ref.read(userAuthProvider).userState.listen((event) {
+      streamSubscription = ref.read(userAuthProvider).userState.listen((event) {
         if (event != null) {
           if (mounted) {
             Navigator.of(context).pushReplacement(MaterialPageRoute(
@@ -31,8 +34,13 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         }
       });
     });
-
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    streamSubscription?.cancel();
+    super.dispose();
   }
 
   @override
