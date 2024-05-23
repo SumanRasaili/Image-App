@@ -4,9 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:vritapp/core/model/liked_photos_model.dart';
-import 'package:vritapp/features/home/provider/liked_state_notifier.dart';
 import 'package:vritapp/features/home/provider/photos_provider.dart';
 
 final firebaseFirestoreProvider = Provider<CloudFirestoreServices>((ref) {
@@ -76,5 +74,25 @@ class CloudFirestoreServices {
       }
       return likedList;
     });
+  }
+
+  Future<void> deleteLikedPhotos(
+      {required LikedPhotos likedPhotosModel, required WidgetRef ref}) async {
+    try {
+      BotToast.showLoading();
+      await firebaseFirestore
+          .collection("users")
+          .doc(firebaseAuth.currentUser?.uid)
+          .collection("liked_photos")
+          .doc(likedPhotosModel.id)
+          .delete();
+
+      ref.invalidate(homeNotifierProvider);
+      BotToast.closeAllLoading();
+      BotToast.showText(text: "Deleted Successfully");
+    } on FirebaseException catch (e) {
+      BotToast.closeAllLoading();
+      BotToast.showText(text: "Error Occured :$e");
+    }
   }
 }

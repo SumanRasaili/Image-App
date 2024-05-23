@@ -1,4 +1,5 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vritapp/core/model/liked_photos_model.dart';
 import 'package:vritapp/core/model/liked_photos_model_state.dart';
 import 'package:vritapp/core/model/photos_model_state.dart';
 import 'package:vritapp/features/liked/services/cloud_firestore_services.dart';
@@ -29,5 +30,10 @@ class Notifier extends StateNotifier<LikedPhotosModelState> {
       }
     }
     return false;
+  }
+
+
+  deleteLikedPics({required LikedPhotos likedPhotosModel,required WidgetRef ref}){
+    ref.read(firebaseFirestoreProvider).deleteLikedPhotos(likedPhotosModel: likedPhotosModel, ref: ref);
   }
 }
