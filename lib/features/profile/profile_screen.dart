@@ -9,10 +9,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vritapp/config/app_colors.dart';
 import 'package:vritapp/core/notification_service/notification_services.dart';
 import 'package:vritapp/features/auth/provider/user_data_notifier.dart';
 import 'package:vritapp/features/auth/repository/auth_repo.dart';
-import 'package:vritapp/widgets/textformfield_widget.dart';
+import 'package:vritapp/widgets/circular_progress_indicator.dart';
+import 'package:vritapp/widgets/custom_alert_button.dart';
+import 'package:vritapp/widgets/custom_text_field.dart';
 
 class ProfileScreen extends StatefulHookConsumerWidget {
   const ProfileScreen({super.key});
@@ -67,26 +70,15 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 showDialog(
                     context: context,
                     builder: (ctx) {
-                      return AlertDialog(
-                          content: const Text("Do you really want to LogOut?"),
-                          actions: [
-                            FilledButton(
-                              onPressed: () {
-                                Navigator.pop(ctx);
-                              },
-                              child: const Text("No"),
-                            ),
-                            FilledButton(
-                              onPressed: () async {
-                                await ref
-                                    .read(userAuthProvider)
-                                    .signOutUser()
-                                    .then((value) => Phoenix.rebirth(ctx));
-                              },
-                              child: const Text("YES"),
-                            ),
-                          ],
-                          title: const Text("Log Out"));
+                      return CustomAlertButton(
+                          titleText: "Log Out",
+                          onPressed: () async {
+                            await ref
+                                .read(userAuthProvider)
+                                .signOutUser()
+                                .then((value) => Phoenix.rebirth(ctx));
+                          },
+                          contentText: "Do you really want to LogOut?");
                     });
               },
               icon: const Icon(Icons.logout)),
@@ -114,8 +106,17 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                   image: imageProvider, fit: BoxFit.cover),
                             ),
                           ),
-                          placeholder: (context, url) =>
-                              const CircularProgressIndicator(),
+                          placeholder: (context, url) => Container(
+                            width: 150.0,
+                            height: 200.0,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.grey),
+                            ),
+                            child: const Center(
+                              child: CustomLoadedr(),
+                            ),
+                          ),
                           errorWidget: (context, url, error) =>
                               const Icon(Icons.error),
                         )
@@ -129,9 +130,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                 image: FileImage(image!), fit: BoxFit.cover),
                           ),
                         ),
-
-                  // SizedBox(
-                  //     width: 150.0, height: 200.0, child: Image.file(image!)),
                   Positioned(
                       bottom: 30,
                       right: 0,
@@ -149,7 +147,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                   image = File(file.path);
                                   setImage(image: File(image?.path ?? ""));
                                 });
-                                // image = File(await getImage() ?? "");
                               }
                             },
                             iconSize: 20,
@@ -162,60 +159,63 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
               ),
               Text(
                 userProfData?.displayName ?? "",
-                style: const TextStyle(fontSize: 20),
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: AppColors.whiteColor,
+                    ),
               ),
               const SizedBox(
                 height: 15,
               ),
               Text(
                 userProfData?.email ?? "",
-                style: const TextStyle(fontSize: 20),
+                style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                      color: AppColors.whiteColor,
+                    ),
               ),
               const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Divider(),
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Text(
+              Text(
                 "Select your date of birth to see magic",
-                style: TextStyle(fontSize: 18),
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      color: AppColors.whiteColor,
+                    ),
               ),
               const SizedBox(
-                height: 10,
+                height: 20,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 23),
                 child: Container(
                     decoration: const BoxDecoration(),
                     child: CustomTextField(
-                        onTap: () async {
-                          DateTime? pickedDate = await showDatePicker(
-                              context: context,
-                              firstDate: DateTime.now(),
-                              lastDate:
-                                  DateTime.now().add(const Duration(days: 7)));
+                      labelText: "Date",
+                      onTap: () async {
+                        DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            firstDate: DateTime.now(),
+                            lastDate:
+                                DateTime.now().add(const Duration(days: 7)));
 
-                          if (pickedDate != null) {
-                            var today = DateTime.now().day;
-                            var month = DateTime.now().month;
-                            var year = DateTime.now().year;
-                            if (pickedDate.year == year &&
-                                pickedDate.month == month &&
-                                pickedDate.day == today) {
-                              Notificationservice().showNotificationdetail();
-                            } else {
-                              BotToast.showText(
-                                  text: "Mystery remain unsolved");
-                            }
-
-                            dateController.text =
-                                DateFormat("yyyy-MM-dd").format(pickedDate);
+                        if (pickedDate != null) {
+                          var today = DateTime.now().day;
+                          var month = DateTime.now().month;
+                          var year = DateTime.now().year;
+                          if (pickedDate.year == year &&
+                              pickedDate.month == month &&
+                              pickedDate.day == today) {
+                            Notificationservice().showNotificationdetail();
+                          } else {
+                            BotToast.showText(text: "Mystery remain unsolved");
                           }
-                        },
-                        controller: dateController,
-                        labeltext: "Date of Birth")),
+
+                          dateController.text =
+                              DateFormat("yyyy-MM-dd").format(pickedDate);
+                        }
+                      },
+                      controller: dateController,
+                    )),
               )
             ],
           ),

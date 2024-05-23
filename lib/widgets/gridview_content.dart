@@ -39,38 +39,53 @@ class GridViewItem extends StatelessWidget {
                 child: Hero(
                   tag: index.toString(),
                   child: CachedNetworkImage(
+                      imageBuilder: (context, imageProvider) {
+                        return Container(
+                          width: MediaQuery.of(context).size.width,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  fit: BoxFit.cover, image: imageProvider),
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10)),
+                              color: Colors.grey.shade800),
+                        );
+                      },
                       placeholder: (context, url) {
                         return Container(
-                          decoration:
-                              BoxDecoration(color: Colors.grey.shade300),
+                          decoration: BoxDecoration(
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(10)),
+                              color: Colors.grey.shade300),
                         );
                       },
                       imageUrl: photos[index].src.portrait),
                 ),
               )),
         ),
-      showLikedButton ?  Positioned(
-          bottom: 0,
-          right: 3,
-          // left: 0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              IconButton(
-                  iconSize: 35,
-                  onPressed: likedButtonPressed,
-                  icon: isLiked
-                      ? const Icon(
-                          Icons.favorite,
-                          color: Colors.red,
-                        )
-                      : Icon(
-                          Icons.favorite_border,
-                          color: Colors.red.shade300,
-                        )),
-            ],
-          ),
-        ):const SizedBox()
+        showLikedButton
+            ? Positioned(
+                bottom: 0,
+                right: 3,
+                // left: 0,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconButton(
+                        iconSize: 35,
+                        onPressed: likedButtonPressed,
+                        icon: isLiked
+                            ? const Icon(
+                                Icons.favorite,
+                                color: Colors.red,
+                              )
+                            : Icon(
+                                Icons.favorite_border,
+                                color: Colors.red.shade300,
+                              )),
+                  ],
+                ),
+              )
+            : const SizedBox()
       ],
     );
   }

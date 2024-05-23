@@ -17,7 +17,6 @@ class DisplayImage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final homephotos = ref.watch(homeNotifierProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Image"),
@@ -37,7 +36,7 @@ class DisplayImage extends ConsumerWidget {
                   imageUrl: image),
             ),
             const SizedBox(
-              height: 10,
+              width: 10,
             ),
             CustomButton(
                 onPressed: () async {

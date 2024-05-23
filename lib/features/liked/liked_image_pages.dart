@@ -41,8 +41,8 @@ class LikedImagesScreen extends ConsumerWidget {
                 padding: const EdgeInsets.all(10),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     childAspectRatio: 0.67,
-                    crossAxisSpacing: 5,
-                    mainAxisSpacing: 5,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10,
                     crossAxisCount: 2),
                 itemCount: streamData.likedPics!.length,
                 itemBuilder: (context, index) {
@@ -60,9 +60,28 @@ class LikedImagesScreen extends ConsumerWidget {
                         child: Hero(
                           tag: "$index",
                           child: CachedNetworkImage(
-                              fit: BoxFit.cover,
+                              imageBuilder: (context, imageProvider) {
+                                return Container(
+                                  width: MediaQuery.of(context).size.width,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: imageProvider),
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                      color: Colors.grey.shade800),
+                                );
+                              },
+                              placeholder: (context, url) {
+                                return Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
+                                      color: Colors.grey.shade300),
+                                );
+                              },
                               imageUrl:
-                                  streamData.likedPics![index].imageUrl ?? ""),
+                                  streamData.likedPics?[index].imageUrl ?? ""),
                         ),
                       )),
                       Positioned(
@@ -77,17 +96,12 @@ class LikedImagesScreen extends ConsumerWidget {
                                     builder: (ctx) {
                                       return CustomAlertButton(
                                           titleText: "Delete ?",
-                                          onPressed: () async{
-                                            likedNotifier.deleteLikedPics(
-                                                likedPhotosModel: streamData
-                                                    .likedPics![index],
-                                                ref: ref);
-                                          },
+                                          onPressed: () {},
                                           contentText:
                                               "Do you really want to delete ?");
                                     });
                               },
-                              icon: const Icon(Icons.delete)))
+                              icon: const Icon(Icons.delete_outline_outlined)))
                     ],
                   );
                 },

@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vritapp/config/config.dart';
 import 'package:vritapp/core/notification_service/notification_services.dart';
 import 'package:vritapp/firebase_options.dart';
 import 'package:vritapp/splash_screen.dart';
@@ -25,10 +26,7 @@ class MyApp extends ConsumerWidget {
         builder: BotToastInit(),
         debugShowCheckedModeBanner: false,
         navigatorObservers: [BotToastNavigatorObserver()],
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.teal),
-          useMaterial3: true,
-        ),
+        theme: lightThemeData(),
         home: const SplashScreen());
   }
 }

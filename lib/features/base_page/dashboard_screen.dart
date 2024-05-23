@@ -76,6 +76,7 @@ class DashboardScreen extends HookConsumerWidget {
       },
       child: Scaffold(
         bottomNavigationBar: BottomNavigationBar(
+          
             currentIndex: selectedIndex.value,
             onTap: (value) {
               selectedIndex.value = value;

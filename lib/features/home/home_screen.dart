@@ -1,14 +1,13 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vritapp/common/common_components.dart';
+import 'package:vritapp/config/app_colors.dart';
 import 'package:vritapp/core/model/liked_photos_model.dart';
 import 'package:vritapp/features/home/provider/liked_state_notifier.dart';
 import 'package:vritapp/features/home/provider/photos_provider.dart';
 import 'package:vritapp/features/home/search_page.dart';
 import 'package:vritapp/features/liked/services/cloud_firestore_services.dart';
-import 'package:vritapp/widgets/display_image.dart';
+import 'package:vritapp/widgets/custom_text_field.dart';
 import 'package:vritapp/widgets/gridview_content.dart';
 
 class HomeScreen extends HookConsumerWidget {
@@ -22,6 +21,7 @@ class HomeScreen extends HookConsumerWidget {
     final photoController = useTextEditingController();
 
     return Scaffold(
+      backgroundColor: AppColors.scaffoldBackGroundColor,
       appBar: AppBar(
         automaticallyImplyLeading: false,
         centerTitle: true,
@@ -30,20 +30,15 @@ class HomeScreen extends HookConsumerWidget {
             preferredSize: const Size(200, 60),
             child: Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
-              child: TextFormField(
+              child: CustomTextField(
+                labelText: "Photos",
                 readOnly: true,
-                controller: photoController,
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => const SearchPage(),
                   ));
                 },
-                decoration: const InputDecoration(
-                    isDense: true,
-                    contentPadding: EdgeInsets.fromLTRB(12, 12, 12, 12),
-                    suffixIcon: Icon(Icons.search),
-                    hintText: "Search Photos",
-                    border: OutlineInputBorder()),
+                controller: photoController,
               ),
             )),
       ),
@@ -77,12 +72,12 @@ class HomeScreen extends HookConsumerWidget {
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     childAspectRatio: 0.7,
                     crossAxisCount: 2,
-                    crossAxisSpacing: 4,
-                    mainAxisSpacing: 12,
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
                   ),
                   itemBuilder: (context, index) {
                     return GridViewItem(
-                      showLikedButton: true,
+                        showLikedButton: true,
                         index: index,
                         photos: homephotos.photos ?? [],
                         isLiked: likedProv.isPhotoLiked(index, homephotos),

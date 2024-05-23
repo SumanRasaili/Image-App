@@ -17,7 +17,8 @@ class CustomAlertButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-        content: Text(contentText),
+        content:
+            Text(contentText, style: Theme.of(context).textTheme.titleMedium),
         actions: [
           FilledButton(
             onPressed: () {
@@ -33,6 +34,9 @@ class CustomAlertButton extends StatelessWidget {
             child: const Text("YES"),
           ),
         ],
-        title: Text(titleText));
+        title: Text(
+          titleText,
+          style: Theme.of(context).textTheme.titleLarge,
+        ));
   }
 }
