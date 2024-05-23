@@ -5,6 +5,7 @@ import 'package:vritapp/config/app_colors.dart';
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String labelText;
+  final FocusNode? focusNode;
   final void Function()? onTap;
   final void Function(String)? onChanged;
   final void Function(String)? onFieldSubmitted;
@@ -13,6 +14,7 @@ class CustomTextField extends StatelessWidget {
     super.key,
     required this.labelText,
     this.onFieldSubmitted,
+    this.focusNode,
     this.onChanged,
     required this.controller,
     this.readOnly = false,
@@ -23,6 +25,7 @@ class CustomTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       readOnly: readOnly,
+      focusNode: focusNode,
       controller: controller,
       style: Theme.of(context)
           .textTheme

@@ -10,16 +10,23 @@ import 'package:vritapp/features/home/provider/search_provider.dart';
 import 'package:vritapp/features/liked/services/cloud_firestore_services.dart';
 import 'package:vritapp/widgets/gridview_content.dart';
 
-class SearchPage extends HookConsumerWidget {
+class SearchPage extends StatefulHookConsumerWidget {
   const SearchPage({super.key});
-
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<SearchPage> createState() => _SearchPageState();
+}
+
+class _SearchPageState extends ConsumerState<SearchPage> {
+  @override
+  Widget build(
+    BuildContext context,
+  ) {
     final photoController = useTextEditingController();
     final photoList = ref.watch(searchNotifierProvider);
     final photoNotifier = ref.watch(searchNotifierProvider.notifier);
     final isSearching = useState<bool>(false);
     final timer = useState<Timer?>(null);
+    final focusNode = useFocusNode();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -45,16 +52,16 @@ class SearchPage extends HookConsumerWidget {
                     ref.read(searchNotifierProvider.notifier).searchPhotos(
                           query: value,
                         );
-                    isSearching.value = false;
+
+                    if (focusNode.hasFocus) {
+                      focusNode.unfocus();
+                    }
                   });
+                  isSearching.value = false;
                 },
                 labelText: "Photos",
                 readOnly: false,
-                onTap: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const SearchPage(),
-                  ));
-                },
+                focusNode: focusNode,
                 controller: photoController,
               ),
             )),
@@ -73,8 +80,7 @@ class SearchPage extends HookConsumerWidget {
                     child: Center(
                       child: CircularProgressIndicator(),
                     ))
-              } else if ((photoList.photos == null ||
-                  photoList.photos!.isEmpty)) ...{
+              } else if ((!isSearching.value && photoList.photos == null)) ...{
                 SizedBox(
                   height: MediaQuery.of(context).size.height -
                       (kTextTabBarHeight +
@@ -89,7 +95,7 @@ class SearchPage extends HookConsumerWidget {
                         ?.copyWith(color: AppColors.whiteColor),
                   )),
                 ),
-              } else
+              } else if ((!isSearching.value && photoList.photos != null)) ...{
                 GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
@@ -99,6 +105,7 @@ class SearchPage extends HookConsumerWidget {
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                       childAspectRatio: 0.75,
                       crossAxisCount: 3,
+                      crossAxisSpacing: 10,
                       mainAxisSpacing: 10),
                   itemBuilder: (context, index) {
                     return GridViewItem(
@@ -118,6 +125,7 @@ class SearchPage extends HookConsumerWidget {
                         index: index);
                   },
                 ),
+              },
               const SizedBox(
                 height: 10,
               ),
