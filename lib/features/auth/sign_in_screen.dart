@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vritapp/config/app_colors.dart';
 import 'package:vritapp/features/auth/provider/auth_controller.dart';
 
 class SignInScreen extends ConsumerWidget {
@@ -17,11 +18,14 @@ class SignInScreen extends ConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Center(
+                  Center(
                     child: Text(
                       "SignUp to access",
                       textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 18),
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge
+                          ?.copyWith(color: AppColors.whiteColor),
                     ),
                   ),
                   const SizedBox(

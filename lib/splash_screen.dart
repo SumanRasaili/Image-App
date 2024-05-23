@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vritapp/common/components/circular_progress_indicator.dart';
+import 'package:vritapp/config/config.dart';
 import 'package:vritapp/features/auth/repository/auth_repo.dart';
 import 'package:vritapp/features/auth/sign_in_screen.dart';
 import 'package:vritapp/features/base_page/dashboard_screen.dart';
@@ -45,19 +47,22 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               "Vrit App",
-              style: TextStyle(fontSize: 25),
+              style: Theme.of(context)
+                  .textTheme
+                  .titleLarge
+                  ?.copyWith(color: AppColors.whiteColor, fontSize: 30),
             ),
-            SizedBox(
+            const SizedBox(
               height: 150,
             ),
-            CircularProgressIndicator()
+            const CustomLoadedr()
           ],
         ),
       ),

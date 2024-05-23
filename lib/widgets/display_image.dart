@@ -3,7 +3,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vritapp/common/common_functions.dart';
-import 'package:vritapp/features/home/provider/photos_provider.dart';
 import 'package:vritapp/common/components/elevated_button.dart';
 
 class DisplayImage extends ConsumerWidget {

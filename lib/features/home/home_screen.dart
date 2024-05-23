@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vritapp/common/components/circular_progress_indicator.dart';
+import 'package:vritapp/common/components/custom_text_field.dart';
 import 'package:vritapp/config/app_colors.dart';
 import 'package:vritapp/core/model/liked_photos_model.dart';
 import 'package:vritapp/features/home/provider/liked_state_notifier.dart';
 import 'package:vritapp/features/home/provider/photos_provider.dart';
 import 'package:vritapp/features/home/search_page.dart';
 import 'package:vritapp/features/liked/services/cloud_firestore_services.dart';
-import 'package:vritapp/common/components/custom_text_field.dart';
 import 'package:vritapp/widgets/gridview_content.dart';
 
 class HomeScreen extends HookConsumerWidget {
@@ -31,7 +32,6 @@ class HomeScreen extends HookConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
               child: CustomTextField(
-                
                 labelText: "Photos",
                 readOnly: true,
                 onTap: () {
@@ -55,7 +55,7 @@ class HomeScreen extends HookConsumerWidget {
                 SizedBox(
                     height: MediaQuery.of(context).size.height * .7,
                     child: const Center(
-                      child: CircularProgressIndicator(),
+                      child: CustomLoadedr(),
                     ))
               } else if ((!homephotos.isLoading) &&
                   homephotos.photos == null) ...{
@@ -104,7 +104,7 @@ class HomeScreen extends HookConsumerWidget {
               ),
               if (homephotos.isPaginationLoading) ...{
                 const Center(
-                  child: CircularProgressIndicator(),
+                  child: CustomLoadedr(),
                 ),
                 const SizedBox(
                   height: 10,
