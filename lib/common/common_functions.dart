@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:bot_toast/bot_toast.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_file_dialog/flutter_file_dialog.dart';
@@ -102,7 +103,6 @@ class CommonRepo {
 
       //to get temp directory
       final dir = await getTemporaryDirectory();
-      print("The temp dir path is ${dir.path}");
       //create a base  file name
       String baseFileName = "image";
       String fileExtension = ".png";
@@ -116,7 +116,6 @@ class CommonRepo {
         filePath = "${dir.path}/$fileName";
         counter++;
       }
-      print("The file Name");
 
 //for saving to fileSystem
       var file = File(filePath);
@@ -124,8 +123,7 @@ class CommonRepo {
       raf.writeFromSync(response.data);
       await raf.close();
       BotToast.closeAllLoading();
-      //showing dialog to save user to whichj location using package
-
+      //showing dialog to save user to which location we r saving the image
       final params =
           SaveFileDialogParams(sourceFilePath: file.path, fileName: filePath);
       final finalPath = await FlutterFileDialog.saveFile(params: params);
@@ -144,7 +142,7 @@ class CommonRepo {
 
   void showDownloadProgress(received, total) {
     if (total != -1) {
-      print((received / total * 100).toStringAsFixed(0) + "%");
+      debugPrint((received / total * 100).toStringAsFixed(0) + "%");
     }
   }
 }
