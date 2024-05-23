@@ -2,7 +2,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:vritapp/common/common_functions.dart';
 import 'package:vritapp/common/components/elevated_button.dart';
 
@@ -55,7 +54,7 @@ class DisplayImage extends ConsumerWidget {
                           children: [
                             const ListTile(
                               title: Text(
-                                "What do you want to do ?",
+                                "What do you want to do?",
                               ),
                             ),
                             ListTile(
@@ -99,8 +98,10 @@ class DisplayImage extends ConsumerWidget {
                             ),
                             ListTile(
                               onTap: () async {
-                                await Share.shareUri(Uri.parse(image))
-                                    .then((value) => {print(value)});
+                                await ref
+                                    .read(commonfuncProvider)
+                                    .sharedImage(image: image)
+                                    .then((value) => Navigator.pop(context));
                               },
                               leading: const Icon(
                                 Icons.share,
@@ -110,7 +111,7 @@ class DisplayImage extends ConsumerWidget {
                               ),
                             ),
                             ListTile(
-                              onTap: () {},
+                              onTap: () async {},
                               leading: const Icon(Icons.download),
                               title: const Text(
                                 "Save to Gallery",

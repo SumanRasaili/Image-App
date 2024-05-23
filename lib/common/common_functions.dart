@@ -52,7 +52,6 @@ class CommonRepo {
           file.path, WallpaperManager.BOTH_SCREEN)));
       if (res) {
         BotToast.closeAllLoading();
-
         BotToast.showText(text: "Wallpaper and LockScreen set succesfully");
       }
     } on PlatformException {
@@ -65,14 +64,20 @@ class CommonRepo {
     try {
       BotToast.showLoading();
       final result = await Share.shareUri(Uri.parse(image));
+      print("Stat resul;t is $result");
       if (result.status == ShareResultStatus.success) {
         BotToast.closeAllLoading();
-
-        BotToast.showText(text: "Wallpaper and LockScreen set succesfully");
+        BotToast.showText(text: "Shared succesfully");
+      } else if (result.status == ShareResultStatus.dismissed) {
+        BotToast.closeAllLoading();
+        BotToast.showText(text: "Cacelled operation");
+      } else if (result.status == ShareResultStatus.unavailable) {
+        BotToast.closeAllLoading();
+        BotToast.showText(text: "Unknown Issue");
       }
     } on PlatformException {
       BotToast.closeAllLoading();
-      BotToast.showText(text: "Failed to set image ");
+      BotToast.showText(text: "Failed to share ");
     }
   }
 }
