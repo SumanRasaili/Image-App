@@ -103,20 +103,31 @@ class CommonRepo {
       //to get temp directory
       final dir = await getTemporaryDirectory();
       print("The temp dir path is ${dir.path}");
-      //create a file name
-      var fileName = "${dir.path}/image.png";
+      //create a base  file name
+      String baseFileName = "image";
+      String fileExtension = ".png";
+      String fileName = "$baseFileName$fileExtension";
+      String filePath = "${dir.path}/$fileName";
+      //counter is to check if the image is already  there or not if there inxrease the file count while
+      //saving if not checked caused iuuse tlike filetype not supported
+      int counter = 1;
+      while (await File(filePath).exists()) {
+        fileName = "$baseFileName($counter)$fileExtension";
+        filePath = "${dir.path}/$fileName";
+        counter++;
+      }
       print("The file Name");
 
 //for saving to fileSystem
-      var file = File(fileName);
-      print("File path =${file.path}");
+      var file = File(filePath);
       var raf = file.openSync(mode: FileMode.write);
       raf.writeFromSync(response.data);
       await raf.close();
       BotToast.closeAllLoading();
       //showing dialog to save user to whichj location using package
+
       final params =
-          SaveFileDialogParams(sourceFilePath: file.path, fileName: fileName);
+          SaveFileDialogParams(sourceFilePath: file.path, fileName: filePath);
       final finalPath = await FlutterFileDialog.saveFile(params: params);
       if (finalPath != null) {
         BotToast.closeAllLoading();
