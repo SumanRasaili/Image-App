@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vritapp/features/home/provider/liked_state_notifier.dart';
-import 'package:vritapp/widgets/custom_alert_button.dart';
+import 'package:vritapp/common/components/custom_alert_button.dart';
 import 'package:vritapp/widgets/display_image.dart';
 
 class LikedImagesScreen extends ConsumerWidget {

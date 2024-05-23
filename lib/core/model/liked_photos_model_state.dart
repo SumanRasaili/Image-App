@@ -1,6 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-
-
 import 'package:vritapp/core/model/liked_photos_model.dart';
 
 class LikedPhotosModelState {
@@ -10,8 +7,6 @@ class LikedPhotosModelState {
     this.likedPics,
     this.isLoading = true,
   });
-
-
 
   LikedPhotosModelState copyWith({
     bool? isLoading,
@@ -23,6 +18,3 @@ class LikedPhotosModelState {
     );
   }
 }
-
-
-

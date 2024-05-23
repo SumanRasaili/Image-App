@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vritapp/common/components/custom_text_field.dart';
 import 'package:vritapp/core/model/liked_photos_model.dart';
 import 'package:vritapp/features/home/provider/search_provider.dart';
 import 'package:vritapp/features/liked/services/cloud_firestore_services.dart';
@@ -26,7 +27,7 @@ class SearchPage extends HookConsumerWidget {
             preferredSize: const Size(200, 60),
             child: Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
-              child: TextFormField(
+              child: CustomTextField(
                 onFieldSubmitted: (value) async {
                   if (value.isNotEmpty) {
                     ref.read(searchNotifierProvider.notifier).searchPhotos(
@@ -46,15 +47,14 @@ class SearchPage extends HookConsumerWidget {
                     isSearching.value = false;
                   });
                 },
+                labelText: "Photos",
+                readOnly: true,
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const SearchPage(),
+                  ));
+                },
                 controller: photoController,
-                decoration: InputDecoration(
-                    isDense: true,
-                    contentPadding: const EdgeInsets.fromLTRB(12, 12, 12, 12),
-                    suffixIcon: photoController.text.isNotEmpty
-                        ? const Icon(Icons.close)
-                        : const Icon(Icons.search),
-                    hintText: "Search Photos",
-                    border: const OutlineInputBorder()),
               ),
             )),
       ),

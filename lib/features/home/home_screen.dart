@@ -7,7 +7,7 @@ import 'package:vritapp/features/home/provider/liked_state_notifier.dart';
 import 'package:vritapp/features/home/provider/photos_provider.dart';
 import 'package:vritapp/features/home/search_page.dart';
 import 'package:vritapp/features/liked/services/cloud_firestore_services.dart';
-import 'package:vritapp/widgets/custom_text_field.dart';
+import 'package:vritapp/common/components/custom_text_field.dart';
 import 'package:vritapp/widgets/gridview_content.dart';
 
 class HomeScreen extends HookConsumerWidget {
@@ -31,6 +31,7 @@ class HomeScreen extends HookConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.only(left: 10, right: 10),
               child: CustomTextField(
+                
                 labelText: "Photos",
                 readOnly: true,
                 onTap: () {

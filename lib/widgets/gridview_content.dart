@@ -52,10 +52,24 @@ class GridViewItem extends StatelessWidget {
                       },
                       placeholder: (context, url) {
                         return Container(
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(10)),
-                              color: Colors.grey.shade300),
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Color(0xFFEBEBF4),
+                                Color(0xFFF4F4F4),
+                                Color(0xFFEBEBF4),
+                              ],
+                              stops: [
+                                0.1,
+                                0.3,
+                                0.4,
+                              ],
+                              begin: Alignment(-1.0, -0.3),
+                              end: Alignment(1.0, 0.3),
+                              tileMode: TileMode.clamp,
+                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
                         );
                       },
                       imageUrl: photos[index].src.portrait),
