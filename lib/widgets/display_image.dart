@@ -111,7 +111,11 @@ class DisplayImage extends ConsumerWidget {
                               ),
                             ),
                             ListTile(
-                              onTap: () async {},
+                              onTap: () async {
+                                await ref
+                                    .read(commonfuncProvider)
+                                    .saveImageToGallery(imageUrl: image);
+                              },
                               leading: const Icon(Icons.download),
                               title: const Text(
                                 "Save to Gallery",

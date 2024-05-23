@@ -1,18 +1,19 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:vritapp/config/app_colors.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String labelText;
   final void Function()? onTap;
- final  void Function(String)? onChanged;
- final void Function(String)? onFieldSubmitted;
+  final void Function(String)? onChanged;
+  final void Function(String)? onFieldSubmitted;
   final bool readOnly;
   const CustomTextField({
     super.key,
     required this.labelText,
-     this.onFieldSubmitted,
-     this.onChanged,
+    this.onFieldSubmitted,
+    this.onChanged,
     required this.controller,
     this.readOnly = false,
     this.onTap,
@@ -23,9 +24,13 @@ class CustomTextField extends StatelessWidget {
     return TextFormField(
       readOnly: readOnly,
       controller: controller,
+      style: Theme.of(context)
+          .textTheme
+          .titleSmall
+          ?.copyWith(color: AppColors.whiteColor),
       onTap: onTap,
-      onChanged:onChanged ,
-      onFieldSubmitted:onFieldSubmitted ,
+      onChanged: onChanged,
+      onFieldSubmitted: onFieldSubmitted,
       decoration: InputDecoration(
           isDense: true,
           labelText: labelText,

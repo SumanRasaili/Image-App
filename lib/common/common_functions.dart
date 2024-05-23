@@ -1,9 +1,10 @@
 import 'dart:io';
-import 'package:flutter_file_dialog/flutter_file_dialog.dart';
+
 import 'package:bot_toast/bot_toast.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:flutter_file_dialog/flutter_file_dialog.dart';
 import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -87,8 +88,11 @@ class CommonRepo {
 
   Future<void> saveImageToGallery({required String imageUrl}) async {
     try {
+      BotToast.showLoading();
       //to download image
       final response = await Dio().get(imageUrl);
+
+      BotToast.closeAllLoading();
       //to get temp directory
       final dir = await getTemporaryDirectory();
 
@@ -102,7 +106,15 @@ class CommonRepo {
       await raf.close();
 
       //showing dialog to save user to whichj location using package
-      final params = SaveFileDialogParams()
-    } catch (e) {}
+      final params = SaveFileDialogParams(sourceFilePath: file.path);
+      final finalPath = await FlutterFileDialog.saveFile(params: params);
+      if (finalPath != null) {
+        BotToast.showText(text: 'Image saved to disk');
+      }
+    } catch (e) {
+      BotToast.closeAllLoading();
+
+      BotToast.showText(text: 'An error occurred while saving the image');
+    }
   }
 }

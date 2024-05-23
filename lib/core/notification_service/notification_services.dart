@@ -39,10 +39,7 @@ class Notificationservice {
     var notificationDetails = NotificationDetails(
         android: androidNotificationDetails, iOS: darwinNotificationDetails);
 
-    flutterLocalNotificationsPlugin.show(
-        Random().nextInt(20),
-        "Happy Birtthday",
-        "Wishing you a very very happy birthday",
-        notificationDetails);
+    flutterLocalNotificationsPlugin.show(Random().nextInt(20), "Happy Birthday",
+        "Wishing you a very very happy birthday", notificationDetails);
   }
 }
