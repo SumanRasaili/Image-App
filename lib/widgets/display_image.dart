@@ -2,6 +2,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vritapp/common/common_components.dart';
+import 'package:vritapp/features/home/provider/photos_provider.dart';
+import 'package:vritapp/widgets/elevated_button.dart';
 
 class DisplayImage extends ConsumerWidget {
   final String image;
@@ -14,6 +17,7 @@ class DisplayImage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final homephotos = ref.watch(homeNotifierProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Image"),
@@ -31,7 +35,15 @@ class DisplayImage extends ConsumerWidget {
                             const Center(child: CircularProgressIndicator()));
                   },
                   imageUrl: image),
-            )
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            CustomButton(
+                onPressed: () async {
+                  await ref.read(commonfuncProvider).setwallPaper(image: image);
+                },
+                title: "Set As WallPaper"),
           ],
         ),
       ),
