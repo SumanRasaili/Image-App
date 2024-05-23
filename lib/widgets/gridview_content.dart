@@ -6,11 +6,13 @@ import 'package:vritapp/widgets/display_image.dart';
 
 class GridViewItem extends StatelessWidget {
   final List<Photo> photos;
+  final bool showLikedButton;
   final bool isLiked;
   final VoidCallback likedButtonPressed;
   final int index;
   const GridViewItem({
     super.key,
+    required this.showLikedButton,
     required this.photos,
     required this.isLiked,
     required this.likedButtonPressed,
@@ -47,7 +49,7 @@ class GridViewItem extends StatelessWidget {
                 ),
               )),
         ),
-        Positioned(
+      showLikedButton ?  Positioned(
           bottom: 0,
           right: 3,
           // left: 0,
@@ -68,7 +70,7 @@ class GridViewItem extends StatelessWidget {
                         )),
             ],
           ),
-        ),
+        ):const SizedBox()
       ],
     );
   }

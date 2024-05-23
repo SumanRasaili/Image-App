@@ -82,6 +82,7 @@ class HomeScreen extends HookConsumerWidget {
                   ),
                   itemBuilder: (context, index) {
                     return GridViewItem(
+                      showLikedButton: true,
                         index: index,
                         photos: homephotos.photos ?? [],
                         isLiked: likedProv.isPhotoLiked(index, homephotos),

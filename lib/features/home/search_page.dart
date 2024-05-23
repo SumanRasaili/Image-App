@@ -1,13 +1,12 @@
 import 'dart:async';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vritapp/common/common_components.dart';
 import 'package:vritapp/core/model/liked_photos_model.dart';
 import 'package:vritapp/features/home/provider/search_provider.dart';
 import 'package:vritapp/features/liked/services/cloud_firestore_services.dart';
+import 'package:vritapp/widgets/gridview_content.dart';
 
 class SearchPage extends HookConsumerWidget {
   const SearchPage({super.key});
@@ -83,108 +82,29 @@ class SearchPage extends HookConsumerWidget {
                 GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
+                  padding: const EdgeInsets.all(10),
                   itemCount:
                       photoList.photos != null ? photoList.photos!.length : 0,
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    childAspectRatio: 0.75,
-                    crossAxisCount: 3,
-                  ),
+                      childAspectRatio: 0.75,
+                      crossAxisCount: 3,
+                      mainAxisSpacing: 10),
                   itemBuilder: (context, index) {
-                    return Stack(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 10, right: 10),
-                          child: GestureDetector(
-                            onTap: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) {
-                                  return Dialog(
-                                    child: InteractiveViewer(
-                                      child: Image.network(photoList
-                                              .photos?[index].src.portrait ??
-                                          ""),
-                                    ),
-                                  );
-                                },
-                              );
-                            },
-                            child: CachedNetworkImage(
-                                imageUrl:
-                                    photoList.photos?[index].src.portrait ??
-                                        ""),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          right: 10,
-                          left: 0,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              IconButton(
-                                  iconSize: 20,
-                                  color: Colors.red.shade300,
-                                  onPressed: () async {
-                                    final likedModel = LikedPhotos(
-                                        id: "${photoList.photos?[index].id}",
-                                        imageUrl: photoList
-                                                .photos?[index].src.portrait ??
-                                            "");
-                                    await ref
-                                        .read(firebaseFirestoreProvider)
-                                        .addToLiked(
-                                            ref: ref,
-                                            likedPhotosModel: likedModel,
-                                            context: context);
-                                  },
-                                  icon: const Icon(Icons.favorite)),
-                              IconButton(
-                                  iconSize: 20,
-                                  color: Colors.amber,
-                                  onPressed: () async {
-                                    showDialog(
-                                        context: context,
-                                        builder: (ctx) {
-                                          return AlertDialog(
-                                              content: const Text(
-                                                  "Do you want to set??"),
-                                              actions: [
-                                                FilledButton(
-                                                  onPressed: () {
-                                                    Navigator.pop(ctx);
-                                                  },
-                                                  child: const Text("No"),
-                                                ),
-                                                FilledButton(
-                                                  onPressed: () async {
-                                                    await ref
-                                                        .read(
-                                                            commonfuncProvider)
-                                                        .setwallPaper(
-                                                            image: photoList
-                                                                    .photos?[
-                                                                        index]
-                                                                    .src
-                                                                    .portrait ??
-                                                                "")
-                                                        .then((value) =>
-                                                            Navigator.of(ctx)
-                                                                .pop());
-                                                  },
-                                                  child: const Text("YES"),
-                                                ),
-                                              ],
-                                              title: const Text(
-                                                  "Set this image as wallpaper"));
-                                        });
-                                  },
-                                  icon: const Icon(Icons.wallpaper)),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
+                    return GridViewItem(
+                        showLikedButton: false,
+                        photos: photoList.photos ?? [],
+                        isLiked: false,
+                        likedButtonPressed: () async {
+                          final likedModel = LikedPhotos(
+                              id: "${photoList.photos?[index].id}",
+                              imageUrl:
+                                  photoList.photos?[index].src.portrait ?? "");
+                          await ref.read(firebaseFirestoreProvider).addToLiked(
+                              ref: ref,
+                              likedPhotosModel: likedModel,
+                              context: context);
+                        },
+                        index: index);
                   },
                 ),
               const SizedBox(
