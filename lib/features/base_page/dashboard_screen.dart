@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vritapp/features/home/home_screen.dart';
-import 'package:vritapp/features/liked/liked_image_pages.dart';
+import 'package:vritapp/features/home/pages/home_screen.dart';
+import 'package:vritapp/features/home/pages/liked_image_pages.dart';
 import 'package:vritapp/features/profile/profile_screen.dart';
 
 class DashboardScreen extends HookConsumerWidget {

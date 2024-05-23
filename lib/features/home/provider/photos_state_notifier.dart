@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vritapp/core/model/photos_model_state.dart';
+import 'package:vritapp/features/home/provider/photos_model_state.dart';
 import 'package:vritapp/features/home/repo/photos_repo.dart';
 
 final homeNotifierProvider =

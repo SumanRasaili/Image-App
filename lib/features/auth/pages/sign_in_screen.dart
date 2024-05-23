@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vritapp/config/app_colors.dart';
-import 'package:vritapp/features/auth/provider/auth_controller.dart';
+import 'package:vritapp/features/auth/provider/auth_provider.dart';
 
 class SignInScreen extends ConsumerWidget {
   const SignInScreen({super.key});

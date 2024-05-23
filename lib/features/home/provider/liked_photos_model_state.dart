@@ -1,4 +1,4 @@
-import 'package:vritapp/core/model/liked_photos_model.dart';
+import 'package:vritapp/features/home/model/liked_photos_model.dart';
 
 class LikedPhotosModelState {
   final bool isLoading;

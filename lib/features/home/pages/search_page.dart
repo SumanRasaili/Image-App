@@ -5,9 +5,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vritapp/common/components/custom_text_field.dart';
 import 'package:vritapp/config/app_colors.dart';
-import 'package:vritapp/core/model/liked_photos_model.dart';
-import 'package:vritapp/features/home/provider/search_provider.dart';
-import 'package:vritapp/features/liked/services/cloud_firestore_services.dart';
+import 'package:vritapp/features/home/model/liked_photos_model.dart';
+import 'package:vritapp/features/home/provider/search_state_notifier.dart';
+import 'package:vritapp/features/home/repo/liked/cloud_firestore_services.dart';
 import 'package:vritapp/widgets/gridview_content.dart';
 
 class SearchPage extends StatefulHookConsumerWidget {
@@ -52,12 +52,11 @@ class _SearchPageState extends ConsumerState<SearchPage> {
                     ref.read(searchNotifierProvider.notifier).searchPhotos(
                           query: value,
                         );
-
+                    isSearching.value = false;
                     if (focusNode.hasFocus) {
                       focusNode.unfocus();
                     }
                   });
-                  isSearching.value = false;
                 },
                 labelText: "Photos",
                 readOnly: false,

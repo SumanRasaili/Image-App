@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:vritapp/config/app_url.dart';
 import 'package:vritapp/core/api_base.dart';
-import 'package:vritapp/core/model/photos_model.dart';
+import 'package:vritapp/features/home/model/photos_model.dart';
 
 part 'photos_repo.g.dart';
 

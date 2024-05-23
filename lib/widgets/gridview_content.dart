@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:vritapp/core/model/photos_model.dart';
+import 'package:vritapp/features/home/model/photos_model.dart';
 import 'package:vritapp/widgets/display_image.dart';
 
 class GridViewItem extends StatelessWidget {

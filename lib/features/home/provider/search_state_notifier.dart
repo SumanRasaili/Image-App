@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vritapp/core/model/search_model_state.dart';
+import 'package:vritapp/features/home/provider/search_model_state.dart';
 import 'package:vritapp/features/home/repo/photos_repo.dart';
 
 final searchNotifierProvider =

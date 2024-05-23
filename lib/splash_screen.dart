@@ -5,7 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vritapp/common/components/circular_progress_indicator.dart';
 import 'package:vritapp/config/config.dart';
 import 'package:vritapp/features/auth/repository/auth_repo.dart';
-import 'package:vritapp/features/auth/sign_in_screen.dart';
+import 'package:vritapp/features/auth/pages/sign_in_screen.dart';
 import 'package:vritapp/features/base_page/dashboard_screen.dart';
 
 class SplashScreen extends StatefulHookConsumerWidget {

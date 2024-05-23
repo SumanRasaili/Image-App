@@ -4,8 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:vritapp/core/model/liked_photos_model.dart';
-import 'package:vritapp/features/home/provider/photos_provider.dart';
+import 'package:vritapp/features/home/model/liked_photos_model.dart';
+import 'package:vritapp/features/home/provider/photos_state_notifier.dart';
 
 final firebaseFirestoreProvider = Provider<CloudFirestoreServices>((ref) {
   return CloudFirestoreServices(

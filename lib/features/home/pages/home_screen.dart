@@ -4,11 +4,11 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:vritapp/common/components/circular_progress_indicator.dart';
 import 'package:vritapp/common/components/custom_text_field.dart';
 import 'package:vritapp/config/app_colors.dart';
-import 'package:vritapp/core/model/liked_photos_model.dart';
+import 'package:vritapp/features/home/model/liked_photos_model.dart';
 import 'package:vritapp/features/home/provider/liked_state_notifier.dart';
-import 'package:vritapp/features/home/provider/photos_provider.dart';
-import 'package:vritapp/features/home/search_page.dart';
-import 'package:vritapp/features/liked/services/cloud_firestore_services.dart';
+import 'package:vritapp/features/home/provider/photos_state_notifier.dart';
+import 'package:vritapp/features/home/pages/search_page.dart';
+import 'package:vritapp/features/home/repo/liked/cloud_firestore_services.dart';
 import 'package:vritapp/widgets/gridview_content.dart';
 
 class HomeScreen extends HookConsumerWidget {
