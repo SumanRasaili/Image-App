@@ -9,13 +9,13 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vritapp/common/components/circular_progress_indicator.dart';
+import 'package:vritapp/common/components/custom_alert_button.dart';
+import 'package:vritapp/common/components/custom_text_field.dart';
 import 'package:vritapp/config/app_colors.dart';
 import 'package:vritapp/core/notification_service/notification_services.dart';
 import 'package:vritapp/features/auth/provider/user_data_notifier.dart';
 import 'package:vritapp/features/auth/repository/auth_repo.dart';
-import 'package:vritapp/common/components/circular_progress_indicator.dart';
-import 'package:vritapp/common/components/custom_alert_button.dart';
-import 'package:vritapp/common/components/custom_text_field.dart';
 
 class ProfileScreen extends StatefulHookConsumerWidget {
   const ProfileScreen({super.key});
@@ -190,6 +190,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 child: Container(
                     decoration: const BoxDecoration(),
                     child: CustomTextField(
+                      readOnly: true,
                       labelText: "Date",
                       onTap: () async {
                         DateTime? pickedDate = await showDatePicker(
@@ -215,7 +216,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         }
                       },
                       controller: dateController,
-                      
                     )),
               )
             ],

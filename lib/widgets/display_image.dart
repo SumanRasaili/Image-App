@@ -114,7 +114,8 @@ class DisplayImage extends ConsumerWidget {
                               onTap: () async {
                                 await ref
                                     .read(commonfuncProvider)
-                                    .saveImageToGallery(imageUrl: image);
+                                    .saveImageToGallery(imageUrl: image)
+                                    .then((value) => Navigator.pop(context));
                               },
                               leading: const Icon(Icons.download),
                               title: const Text(

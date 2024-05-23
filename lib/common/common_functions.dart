@@ -90,9 +90,16 @@ class CommonRepo {
     try {
       BotToast.showLoading();
       //to download image
-      final response = await Dio().get(imageUrl);
+      final response = await Dio().get(imageUrl,
+          onReceiveProgress: showDownloadProgress,
+          options: Options(
+              responseType: ResponseType.bytes,
+              followRedirects: false,
+              validateStatus: (status) {
+                return status! < 500;
+              }));
+      print("response ${response.data.toString()}");
 
-      BotToast.closeAllLoading();
       //to get temp directory
       final dir = await getTemporaryDirectory();
 
@@ -104,17 +111,26 @@ class CommonRepo {
       var raf = file.openSync(mode: FileMode.write);
       raf.writeFromSync(response.data);
       await raf.close();
-
+      BotToast.closeAllLoading();
       //showing dialog to save user to whichj location using package
       final params = SaveFileDialogParams(sourceFilePath: file.path);
       final finalPath = await FlutterFileDialog.saveFile(params: params);
       if (finalPath != null) {
-        BotToast.showText(text: 'Image saved to disk');
+        BotToast.closeAllLoading();
+        BotToast.showText(text: 'Image saved');
+      } else {
+        BotToast.closeAllLoading();
+        BotToast.showText(text: 'cancelled before saving');
       }
     } catch (e) {
       BotToast.closeAllLoading();
-
       BotToast.showText(text: 'An error occurred while saving the image');
+    }
+  }
+
+  void showDownloadProgress(received, total) {
+    if (total != -1) {
+      print((received / total * 100).toStringAsFixed(0) + "%");
     }
   }
 }
