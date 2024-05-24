@@ -176,14 +176,14 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Divider(),
               ),
+              const SizedBox(
+                height: 10,
+              ),
               Text(
                 "Select your date of birth to see magic",
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       color: AppColors.whiteColor,
                     ),
-              ),
-              const SizedBox(
-                height: 20,
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 23),
@@ -290,9 +290,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                                 },
                                 icon: const Icon(Icons.info))
                           ],
-                        ),
-                        const SizedBox(
-                          height: 10,
                         ),
                         CustomTextField(
                           hintText: "Select Date",
