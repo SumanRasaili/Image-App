@@ -34,7 +34,22 @@
 	<string>to take picture</string>
 	<key>NSMicrophoneUsageDescription   </key>
 	<string>to take video</string>
-	<key>UISupportedInterfaceOrientations</key>
+<!-- Google Sign-in Section -->
+<key>CFBundleURLTypes</key>
+<array>
+	<dict>
+		<key>CFBundleTypeRole</key>
+		<string>Editor</string>
+		<key>CFBundleURLSchemes</key>
+		<array>
+			<!-- Copied from GoogleService-Info.plist key REVERSED_CLIENT_ID -->
+	<string>com.googleusercontent.apps.803116489851-cf0ihdivpbo9p1e2i1b5tud05rvhaujk</string>
+		</array>
+	</dict>
+</array>
+<!-- End of the Google Sign-in Section -->
+     <key>GIDClientID</key>
+	<string>803116489851-cf0ihdivpbo9p1e2i1b5tud05rvhaujk.apps.googleusercontent.com</string>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
