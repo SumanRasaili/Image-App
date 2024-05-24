@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vritapp/config/app_colors.dart';
 import 'package:vritapp/features/home/pages/home_screen.dart';
 import 'package:vritapp/features/home/pages/liked_image_pages.dart';
 import 'package:vritapp/features/profile/profile_screen.dart';
@@ -32,23 +33,19 @@ class DashboardScreen extends HookConsumerWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    "Exit?",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+                  Text("Exit?",
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge
+                          ?.copyWith(color: AppColors.whiteColor)),
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    "Are you sure want to exit?",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                    ),
-                  ),
+                  Text("Are you sure want to exit?",
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(color: AppColors.whiteColor)),
                   const SizedBox(
                     height: 12,
                   ),
@@ -76,7 +73,6 @@ class DashboardScreen extends HookConsumerWidget {
       },
       child: Scaffold(
         bottomNavigationBar: BottomNavigationBar(
-          
             currentIndex: selectedIndex.value,
             onTap: (value) {
               selectedIndex.value = value;
