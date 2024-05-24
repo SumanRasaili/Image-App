@@ -5,6 +5,11 @@ import 'package:vritapp/config/config.dart';
 ThemeData lightThemeData() {
   return ThemeData(
       datePickerTheme: DatePickerThemeData(
+          yearOverlayColor: MaterialStatePropertyAll(AppColors.whiteColor),
+          surfaceTintColor: AppColors.whiteColor,
+          yearBackgroundColor: MaterialStatePropertyAll(AppColors.whiteColor),
+          dayOverlayColor: MaterialStatePropertyAll(AppColors.whiteColor),
+          headerHelpStyle: TextStyle(color: AppColors.whiteColor),
           rangePickerSurfaceTintColor: AppColors.whiteColor,
           inputDecorationTheme: InputDecorationTheme(
               fillColor: AppColors.whiteColor,
@@ -15,6 +20,7 @@ ThemeData lightThemeData() {
               )),
           headerForegroundColor: AppColors.whiteColor,
           shadowColor: AppColors.whiteColor,
+          rangeSelectionBackgroundColor: Colors.white,
           rangePickerShadowColor: AppColors.whiteColor,
           rangeSelectionOverlayColor:
               MaterialStatePropertyAll(AppColors.whiteColor),
@@ -32,7 +38,7 @@ ThemeData lightThemeData() {
           dayForegroundColor: MaterialStatePropertyAll(AppColors.whiteColor),
           dayStyle: TextStyle(color: AppColors.whiteColor),
           backgroundColor: AppColors.scaffoldBackGroundColor,
-          todayBackgroundColor: const MaterialStatePropertyAll(Colors.black)),
+          todayBackgroundColor: const MaterialStatePropertyAll(Colors.teal)),
       dialogTheme:
           DialogTheme(backgroundColor: AppColors.scaffoldBackGroundColor),
       iconTheme: IconThemeData(size: 25, color: AppColors.whiteColor),
