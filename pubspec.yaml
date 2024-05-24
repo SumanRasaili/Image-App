@@ -34,6 +34,7 @@ dependencies:
   shimmer_pro: ^0.0.6
   share_plus: ^9.0.0
   flutter_file_dialog: ^3.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -41,6 +42,12 @@ dev_dependencies:
   riverpod_generator: ^2.4.0
   custom_lint: ^0.6.4
   build_runner: ^2.4.9  
+  flutter_launcher_icons: ^0.13.1
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/logo_icon.png" 
 
 flutter:
   uses-material-design: true

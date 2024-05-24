@@ -1,7 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:vritapp/config/app_colors.dart';
 
 class CustomTextField extends StatelessWidget {
@@ -20,7 +18,7 @@ class CustomTextField extends StatelessWidget {
     required this.labelText,
     this.suffix,
     this.suffixIcon,
-   required this.hintText,
+    required this.hintText,
     this.onFieldSubmitted,
     this.focusNode,
     this.onChanged,

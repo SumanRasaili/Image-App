@@ -1,9 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:vritapp/features/home/model/liked_photos_model.dart';
 import 'package:vritapp/features/home/provider/liked_state_notifier.dart';
 import 'package:vritapp/common/components/custom_alert_button.dart';
 import 'package:vritapp/widgets/display_image.dart';
+
+import 'package:vritapp/features/home/repo/liked/cloud_firestore_services.dart';
 
 class LikedImagesScreen extends ConsumerWidget {
   const LikedImagesScreen({super.key});
@@ -95,7 +98,16 @@ class LikedImagesScreen extends ConsumerWidget {
                                     builder: (ctx) {
                                       return CustomAlertButton(
                                           titleText: "Delete ?",
-                                          onPressed: () {},
+                                          onPressed: () async {
+                                            await ref
+                                                .read(firebaseFirestoreProvider)
+                                                .deleteLikedPhotos(
+                                                    ref: ref,
+                                                    likedPhotosModel: streamData
+                                                        .likedPics![index])
+                                                .then((value) =>
+                                                    Navigator.of(ctx).pop());
+                                          },
                                           contentText:
                                               "Do you really want to delete ?");
                                     });

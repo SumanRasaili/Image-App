@@ -83,7 +83,6 @@ class CloudFirestoreServices {
           .collection("liked_photos")
           .doc(likedPhotosModel.id)
           .delete();
-
       ref.invalidate(homeNotifierProvider);
       BotToast.closeAllLoading();
       BotToast.showText(text: "Deleted Successfully");
