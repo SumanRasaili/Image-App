@@ -40,7 +40,7 @@ ThemeData lightThemeData() {
           backgroundColor: AppColors.scaffoldBackGroundColor,
           todayBackgroundColor: const MaterialStatePropertyAll(Colors.teal)),
       dialogTheme:
-          DialogTheme(backgroundColor: AppColors.scaffoldBackGroundColor ),
+          DialogTheme(backgroundColor: AppColors.scaffoldBackGroundColor),
       iconTheme: IconThemeData(size: 25, color: AppColors.whiteColor),
       listTileTheme: ListTileThemeData(
           iconColor: AppColors.whiteColor,
